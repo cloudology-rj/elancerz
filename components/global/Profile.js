@@ -11,7 +11,7 @@ import {
 } from '@/components/global/Text';
 import { ButtonPrimary, ButtonSecondary } from '@/components/global/Button';
 
-import ProfileCard from '@/../components/Cards/ProfileCard/ProfileCard';
+import ProfileCard from '../Cards/ProfileCard/ProfileCard';
 
 
 const ProfileContainer = styled.div`
