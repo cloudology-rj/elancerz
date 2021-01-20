@@ -31,7 +31,7 @@ const ProfileCard = (props) => {
         <PreTitle>4.5</PreTitle>
       </FlexContainer>
       <br />
-      <PreTitle>JOINED ON MAY 23, 2018</PreTitle>
+      <PreTitle>JOINED ON MAY 23, 2019</PreTitle>
 
       {/*
        */}
