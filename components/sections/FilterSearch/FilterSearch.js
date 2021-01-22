@@ -1,50 +1,61 @@
-import React from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
 import { HeaderThree, PreTitle } from '@/components/global/Text';
 import Input from '@/components/global/Input';
-import { ButtonTertiary, ButtonPrimary, ButtonOpacity } from '@/components/global/Button';
+import {
+  ButtonTertiary,
+  ButtonPrimary,
+  ButtonOpacity,
+} from '@/components/global/Button';
 
-import CategoryList from '../CategoryList/CategoryList';
+import CategoryListToggle from '../CategoryList/CategoryListToggle';
 
-const FilterContainer = styled.div`
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100vh;
-  width: 100%;
-  padding: 32px;
-  z-index: 1000;
-  background: #fff;
+import data, { categoriesData, locationsData } from './data';
 
-  display: grid;
-  grid-column-gap: 12px;
-`;
+import {
+  FilterContainer,
+  FilterHeader,
+  FlexContainer,
+  FlexCenter,
+} from './FilterSearchStyles';
 
-const FilterHeader = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
+const FilterSearch = ({ onToggleFilter }) => {
+  const [filters, setFilters] = useState(data);
 
-const FlexContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 12px;
-`;
+  console.log(filters.locations);
 
-const FlexCenter = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  column-gap: 16px;
-`;
+  const resetSelection = (data) =>
+    data.map((item) => {
+      const newItem = { ...item };
+      newItem.selected = false;
+      return newItem;
+    });
 
-const FilterSearch = ({onToggleFilter}) => {
+  const resetPresets = () => {
+    const { locations, categories } = filters;
+
+    const newLocations = resetSelection(locations);
+    const newCategories = resetSelection(categories);
+
+    const resetFilter = { categories: newCategories, locations: newLocations };
+
+    setFilters(resetFilter);
+  };
+
+  const toggleSelected = (id, title) => {
+    const target = filters[title];
+
+    target.map((item) =>
+      item.id === id ? (item.selected = !item.selected) : item
+    );
+
+    setFilters({ ...filters, [title]: target });
+  };
+
+
+  const{locations,categories} = filters;
   return (
     <FilterContainer>
       <FilterHeader>
@@ -58,14 +69,21 @@ const FilterSearch = ({onToggleFilter}) => {
           <HeaderThree>Filters</HeaderThree>
         </FlexContainer>
         <ButtonOpacity onClick={() => onToggleFilter(false)}>
-
-        <Image src="/icons/ArrowPointLeft.svg" width={24} height={24} />
+          <Image src="/icons/ArrowPointLeft.svg" width={24} height={24} />
         </ButtonOpacity>
       </FilterHeader>
 
+      <CategoryListToggle
+        title="categories"
+        list={categories}
+        onToggleSelected={toggleSelected}
+      />
 
-      <CategoryList title="Category" />
-      <CategoryList title="Location" />
+      <CategoryListToggle
+        title="locations"
+        list={locations}
+        onToggleSelected={toggleSelected}
+      />
 
       <div>
         <PreTitle>Price</PreTitle>
@@ -77,7 +95,7 @@ const FilterSearch = ({onToggleFilter}) => {
       </div>
 
       <FlexCenter>
-        <ButtonTertiary>Reset</ButtonTertiary>
+        <ButtonTertiary onClick={() => resetPresets()}>Reset</ButtonTertiary>
         <ButtonPrimary>Apply filters</ButtonPrimary>
       </FlexCenter>
     </FilterContainer>

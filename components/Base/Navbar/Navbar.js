@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { LogoSmall } from '@/components/global/Logo';
 
 import { ButtonPrimary } from '@/components/global/Button';
+import Container from '@/components/global/Container';
 import SidebarNav from '../SidebarNav/SidebarNav';
 
 import {
@@ -19,23 +20,24 @@ const Navbar = (props) => {
 
   return (
     <>
-      <HeaderContainer>
-        <FlexContainer>
-          <HamburgerMenu onClick={() => setToggle(true)}>
-            <Image src="/icons/menu.svg" width="24px" height="24px" />
-          </HamburgerMenu>
-          <LogoSmall />
-        </FlexContainer>
+      <Container>
+        <HeaderContainer>
+          <FlexContainer>
+            <HamburgerMenu onClick={() => setToggle(true)}>
+              <Image src="/icons/menu.svg" width="24px" height="24px" />
+            </HamburgerMenu>
+            <LogoSmall />
+          </FlexContainer>
 
-        <NavbarRight>
-          <NavbarInput placeholder="Enter a search" />
-          <Image src="/icons/Bell.svg" width="25px" height="25px" />
-          <Image src="/icons/chat.svg" width="25px" height="25px" />
+          <NavbarRight>
+            <NavbarInput placeholder="Enter a search" />
+            <Image src="/icons/Bell.svg" width="25px" height="25px" />
+            <Image src="/icons/chat.svg" width="25px" height="25px" />
 
-          {/* if not logged in <ButtonPrimary>login</ButtonPrimary> */}
-        </NavbarRight>
-      </HeaderContainer>
-
+            {/* if not logged in <ButtonPrimary>login</ButtonPrimary> */}
+          </NavbarRight>
+        </HeaderContainer>
+      </Container>
       {toggle && <SidebarNav toggle={toggle} onToggle={setToggle} />}
     </>
   );

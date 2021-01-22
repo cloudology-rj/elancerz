@@ -72,6 +72,7 @@ export const BoxLeft = styled.div`
 `;
 
 export const InputGroup = styled.div`
+   position:relative;
     & input {
         padding: 12px 16px;
         background: ${props => props.theme.colors.cloud};
@@ -94,4 +95,13 @@ export const InputGroup = styled.div`
     }
     
 `;
+
+export const IconWrapper = styled.div`
+   position:absolute;
+   pointer-events:none;
+   top:11px;
+   right:14px;
+`;
+
+
 

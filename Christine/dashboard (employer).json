@@ -1,0 +1,81 @@
+{
+    "Dashboard":    [
+              {
+                "name": "Contracts",
+                "path": "/contacts"
+              },
+              {
+                "name": "Explore",
+                "path": "/explore"
+              },
+              {
+                "name": "Profile",
+                "path": "/profile"
+              },
+              {
+                "name": "Messages",
+                "path": "/messages"
+              },
+              {
+                "name":"Settings",
+                "path": "/settings"
+              },
+              {
+                "name":"Help",
+                "path": "/help"
+              },
+              {
+                "name":"Logout",
+                "path": "logout"
+              }
+        ],
+    "Notifcations": [
+      {
+      "id":1,
+      "notif1":""
+      },
+      {
+        "id":2,
+      "notif2":""
+      },
+      {
+        "id":3,
+      "notif3":""
+      },
+      {
+        "id":4,
+      "notif4":""
+      },
+      {
+        "id":5,
+      "notif5":""
+      }
+    ],
+    "Messages": [
+    {
+      "id":1,
+      "image": "",
+      "message":""
+    },
+    {
+      "id":2,
+      "image": "",
+      "notif2":""
+    },
+    {
+      "id":3,
+      "image": "",
+      "notif3":""
+    },
+    {
+      "id":4,
+      "image": "",
+      "notif4":""
+    },
+    {
+      "id":5,
+      "image": "",
+      "notif5":""
+    }
+    ]
+}

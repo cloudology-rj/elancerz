@@ -7,7 +7,7 @@ import { VIEW } from './Constant'
 import Employeer from './Employeer';
 
 const Dashboard = () => {
-    const [currentView, setCurrentView] = useState(VIEW.FREELANCER)
+  const [currentView, setCurrentView] = useState(VIEW.FREELANCER)
 
   return (
       <DashBoardLayout>

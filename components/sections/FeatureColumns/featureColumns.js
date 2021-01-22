@@ -1,18 +1,22 @@
-
 import PropTypes from 'prop-types';
+import Image from 'next/Image';
 import Container from '@/components/global/Container';
 
-
-import {FeatureImage, FeatureSubtitle, FeatureContainer, FeatureTitle} from './FeatureColumnsStyles';
-
+import {
+  FeatureImage,
+  FeatureSubtitle,
+  FeatureContainer,
+  FeatureTitle,
+  FeatureRow,
+} from './FeatureColumnsStyles';
 
 // Three Column Feature on Homepage
 const FeatureColumns = (props) => {
   return (
     <Container>
       <FeatureContainer>
-        <div>
-          <FeatureImage
+        <FeatureRow>
+          <Image
             src="/illustrations/featureOne.svg"
             alt="Feature row"
             width="360"
@@ -23,10 +27,11 @@ const FeatureColumns = (props) => {
             Suspendisse urna ut adipiscing purus enim, viverra. Pharetra viverra
             id nulla purus.
           </FeatureSubtitle>
-        </div>
+        </FeatureRow>
 
-        <div>
-          <FeatureImage
+        <FeatureRow>
+   
+          <Image
             src="/illustrations/featureTwo.svg"
             alt="Feature row"
             width="360"
@@ -37,10 +42,10 @@ const FeatureColumns = (props) => {
             Suspendisse urna ut adipiscing purus enim, viverra. Pharetra viverra
             id nulla purus.
           </FeatureSubtitle>
-        </div>
+        </FeatureRow>
 
-        <div>
-          <FeatureImage
+        <FeatureRow>
+          <Image
             src="/illustrations/featureThree.svg"
             alt="Feature row"
             width="360"
@@ -51,7 +56,7 @@ const FeatureColumns = (props) => {
             Suspendisse urna ut adipiscing purus enim, viverra. Pharetra viverra
             id nulla purus.
           </FeatureSubtitle>
-        </div>
+        </FeatureRow>
       </FeatureContainer>
     </Container>
   );

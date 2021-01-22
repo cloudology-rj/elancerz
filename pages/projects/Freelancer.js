@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import TopOptions from 'components/projects/TopOptions';
 import Project from 'components/projects/Project';
 
 const Freelancer = () => {
+  const [isActive, setIsActive] = useState(false)
   return <Boxes>
-      <TopOptions />
+      <TopOptions setIsActive={setIsActive}/>
       <ProjectsWrapper>
-          <Project />
+          <Project isActive={isActive}/>
       </ProjectsWrapper>
   </Boxes>
 };

@@ -72,7 +72,7 @@ font-size: ${(props) => props.theme.fontSizes.s4};
 font-family: 'Open sans', sans-serif;
 font-weight: 700;
 line-height: 21.79px;
-text-align: center;
+
 `;
 
 

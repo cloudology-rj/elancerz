@@ -34,6 +34,7 @@ const theme = {
     turqoise: '#EEFBFB',
     mustard: '#FCF9EC',
     white: ' #FFFFFF',
+    error: ' #D03131',
   },
 };
 

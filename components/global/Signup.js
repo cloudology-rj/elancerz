@@ -2,9 +2,10 @@ import Image from 'next/image';
 import styled from 'styled-components';
 import firebase from 'firebase/app';
 
+import { Field, Form, Formik, FormikConfig, FormikValues } from 'formik';
+import * as yup from 'yup';
+
 import { signInWithGoogle } from '../../firebase/firebase';
-
-
 
 import {
   HeaderThree,
@@ -12,7 +13,7 @@ import {
   PreTitle,
   HighlightColor,
 } from '@/components/global/Text';
-import { ButtonPrimary, ButtonSecondary } from '@/components/global/Button';
+import { ButtonPrimary, ButtonTertiary } from '@/components/global/Button';
 import Input from '@/components/global/Input';
 
 const SignUpContainer = styled.div`
@@ -22,9 +23,16 @@ const SignUpContainer = styled.div`
   gap: 2em;
 `;
 
-const Signup = (props) => {
-  
+const FormGroup = styled.div`
+  display: grid;
+  gap: 15px;
+`;
 
+const FormContainer = styled(Form)`
+  width: 100%;
+`;
+
+const Signup = (props) => {
   return (
     <SignUpContainer>
       <HeaderThree>Sign up</HeaderThree>
@@ -35,15 +43,38 @@ const Signup = (props) => {
         Continue with Facebook
       </ButtonPrimary>
 
-      <ButtonSecondary onClick={signInWithGoogle}>
+      <ButtonTertiary onClick={signInWithGoogle}>
         <Image src="/icons/google-icon.svg" height="22px" width="22px" />
         Continue with google
-      </ButtonSecondary>
+      </ButtonTertiary>
 
       <Bold>Or</Bold>
 
-      <Input placeholder="Enter your email address" />
-      <ButtonPrimary fullWidth>Continue</ButtonPrimary>
+      <Formik
+        validationSchema={yup.object({
+          email: yup.string().email()
+        })}
+        initialValues={{
+          email: '',
+          username: '',
+          password: '',
+        }}
+      >
+        <FormContainer>
+          <FormGroup>
+            <Field
+              name="email"
+              component={Input}
+              label="email"
+              placeholder="Enter your email address"
+              fullWidth={true}
+            />
+            <ButtonPrimary fullWidth>Continue</ButtonPrimary>
+          </FormGroup>
+        </FormContainer>
+      </Formik>
+
+  
       <PreTitle>
         By joining, you agree to our Terms of Service, as well as to receive
         occasional emails from us.
@@ -59,3 +90,9 @@ const Signup = (props) => {
 Signup.propTypes = {};
 
 export default Signup;
+
+
+
+export function FormikStepper(){
+
+}

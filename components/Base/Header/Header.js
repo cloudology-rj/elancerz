@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 
 
-import { ButtonPrimary, ButtonSecondary } from '@/components/global/Button';
+import { ButtonPrimary, ButtonTertiary } from '@/components/global/Button';
 import { HighlightColor } from '@/components/global/Text';
 import Container from '@/components/global/Container';
 import Input from '@/components/global/Input';
@@ -27,7 +27,7 @@ const Header = (props) => {
 
         <NavbarButton>
           <ButtonPrimary>Sign Up</ButtonPrimary>
-          <ButtonSecondary>Sign In</ButtonSecondary>
+          <ButtonTertiary>Sign In</ButtonTertiary>
         </NavbarButton>
       </NavbarContainer>
       <Container>
@@ -43,9 +43,9 @@ const Header = (props) => {
             <ButtonPrimary onClick={() => router.push('/signupmobile')}>
               Sign up
             </ButtonPrimary>
-            <ButtonSecondaryStyle onClick={() => router.push('/signinmobile')}>
+            <ButtonTertiary onClick={() => router.push('/signinmobile')}>
               login
-            </ButtonSecondaryStyle>
+            </ButtonTertiary>
           </ButtonContainer>
         </HeaderContent>
       </Container>

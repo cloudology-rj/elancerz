@@ -22,7 +22,11 @@ const ExploreFreelancers = (props) => {
           Back
         </ButtonPrimary>
         <HeaderTwo>Explore</HeaderTwo>
-        <YellowTextBackground>Web Developers</YellowTextBackground>
+        <YellowTextBackground>
+         <HeaderThree>
+         Web Developers
+         </HeaderThree>
+          </YellowTextBackground>
       </ExploreHeader>
       <FreelancerList />
     </>

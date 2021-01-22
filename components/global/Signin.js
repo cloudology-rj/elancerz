@@ -11,7 +11,7 @@ import {
   HighlightColor,
   Body,
 } from '@/components/global/Text';
-import { ButtonPrimary, ButtonSecondary } from '@/components/global/Button';
+import { ButtonPrimary, ButtonTertiary } from '@/components/global/Button';
 import Input from '@/components/global/Input';
 
 const SignInContainer = styled.div`
@@ -22,17 +22,15 @@ const SignInContainer = styled.div`
 `;
 
 const FlexContainer = styled.div`
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    width:100%;
-
-`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+`;
 const InputGroup = styled.div`
-
-display:flex;
-align-items:center;
-`
+  display: flex;
+  align-items: center;
+`;
 
 const SignIn = (props) => {
   //   const signIn = () => {
@@ -49,10 +47,10 @@ const SignIn = (props) => {
         Continue with Facebook
       </ButtonPrimary>
 
-      <ButtonSecondary nClick={signInWithGoogle}>
+      <ButtonTertiary nClick={signInWithGoogle}>
         <Image src="/icons/google-icon.svg" height="22px" width="22px" />
         Continue with google
-      </ButtonSecondary>
+      </ButtonTertiary>
 
       <Bold>Or</Bold>
 
@@ -65,7 +63,7 @@ const SignIn = (props) => {
           <Body>Remember me</Body>
         </InputGroup>
 
-        <ButtonSecondary>Forgot password</ButtonSecondary>
+        <ButtonTertiary>Forgot password</ButtonTertiary>
       </FlexContainer>
 
       <PreTitle>

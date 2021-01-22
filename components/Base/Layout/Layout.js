@@ -23,10 +23,10 @@ const Layout = ({ children, title = 'Elancerz' }) => {
       </Head>
       <LayoutContainer>
         <LayoutContent>
-          <Container>
+     
             <Navbar />
             <main>{children}</main>
-          </Container>
+       
         </LayoutContent>
 
         <Footer />
