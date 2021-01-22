@@ -8,6 +8,7 @@ import Terms from './terms-of-service/terms'
 import Privacy from './privacy-policy/privacy'
 import Payment from './payment-details/payment'
 import Security from './password-and-security/security'
+import Container from '../global/Container'
 
 const SettingsComponent = ({section}) => {
     const [isMobile] = useContext(IsMobileContext)
@@ -43,6 +44,7 @@ const SettingsComponent = ({section}) => {
 
     return (
         <Layout>
+            <Container>
             <SettingsGrid>
                 {(!isMobile || section == undefined) && (
                     <Sections>
@@ -57,13 +59,14 @@ const SettingsComponent = ({section}) => {
                 </Sections>
                 )}
                 <Details>
-                    {section == 'account-information' && <AccountInfo/>}
+                    {section == 'account-information' && <AccountInfo isMobile={isMobile}/>}
                     {section == 'terms-of-service' && <Terms/>}
                     {section == 'privacy-policy' && <Privacy/>}
                     {section == 'payment-details' && <Payment/>}
                     {section == 'password-and-security' && <Security/>}
                 </Details>
             </SettingsGrid>
+            </Container>
         </Layout>
     )
 }

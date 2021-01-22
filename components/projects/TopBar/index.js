@@ -7,7 +7,7 @@ import {
     Button
 } from './TopBarStyles'
 
-import { VIEW } from '../../../pages/dashboard/Constant'
+import { VIEW } from '../../dashboard/DashboardLayout/Constant'
 
 const TopBar = ({ currentView, setCurrentView }) => {
  

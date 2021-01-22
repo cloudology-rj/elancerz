@@ -48,6 +48,12 @@ export const ButtonTertiary = styled.button`
 
   display: flex;
   align-items: center;
+
+  ${(props) =>
+    props.isCenter &&
+    css`
+      justify-self: center;
+    `}
 `;
 
 export const ButtonOpacity = styled.button`
@@ -56,12 +62,9 @@ export const ButtonOpacity = styled.button`
   padding: 8px;
   color: ${(props) => props.theme.colors.text};
   border-radius: 24px;
-  box-shadow: 0px 6px 2px -4px rgba(14, 19, 44, 0.08),
-    inset 0px -1px 0px rgba(14, 19, 44, 0.24);
-
+  box-shadow: 0px 6px 2px -4px rgba(14, 19, 44, 0.08), inset 0px -1px 0px rgba(14, 19, 44, 0.24);
   width: 40px;
   height: 40px;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -86,8 +89,6 @@ export const ButtonPill = styled.button`
       background: ${(props) => props.theme.colors.primaryBrand};
       color: #fff;
     `}
-
-
 `;
 
 export const ButtonSecondary = styled.button`
@@ -103,10 +104,10 @@ export const ButtonSecondary = styled.button`
 `;
 
 export const ButtonTransparent = styled.button`
-${button};
-background: transparent;
-padding: 12px 24px 12px 24px;
-border-radius: 22px;
+  ${button};
+  background: transparent;
+  padding: 12px 24px 12px 24px;
+  border-radius: 22px;
   font-size: ${(props) => props.theme.fontSizes.s4};
   font-family: 'Open sans', sans-serif;
   line-height: 22px;
@@ -114,4 +115,4 @@ border-radius: 22px;
   color: ${(props) => props.theme.colors.subtleText};
   outline: none;
   cursor: pointer;
-`
+`;

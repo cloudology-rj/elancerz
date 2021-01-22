@@ -1,14 +1,13 @@
 import React, {useState} from 'react'
-import {StyledAccountInfo, StyledPretitle, StyledBold, StyledSmallText, ButtonError} from './AccountInfoStyles'
-import {ButtonPrimary, ButtonOpacity, ButtonTransparent} from '@/components/global/Button'
+import {StyledAccountInfo, StyledPretitle, StyledBold, StyledSmallText, ButtonError, EditButton} from './AccountInfoStyles'
+import {ButtonPrimary, ButtonTransparent} from '@/components/global/Button'
 import {HeaderThree, Body}  from '@/components/global/Text'
 import {Header} from '../reusables/Header'
 import Modal from '../reusables/Modal'
 
 
-const AccountInfo = () => {
+const AccountInfo = ({isMobile}) => {
     const [modalActive, setModalActive] = useState(false)
-
     const ModalContent = () => {
         return(
             <>
@@ -19,9 +18,10 @@ const AccountInfo = () => {
             </>
         )
     }
-    
+
     return (
         <StyledAccountInfo>
+            <EditButton className="edit-btn" isMobile={isMobile}>EDIT</EditButton>
             <Header headerText="Account Information"/>
             <div className="info container">
                 <div className="username">

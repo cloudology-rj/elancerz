@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import Image from 'next/Image';
+import Image from 'next/image';
 import Container from '@/components/global/Container';
 
 import {

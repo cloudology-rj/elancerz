@@ -21,12 +21,15 @@ export const ButtonError = styled(ButtonPrimary)`
         margin-bottom: 10rem;
     }
 `
+export const EditButton = styled(ButtonPrimary)`
+    position: absolute;
+    top: 1.5rem;
+    right: 0;
+    display: ${({isMobile}) => isMobile ? "none" : "block"}
+`
 
 export const StyledAccountInfo = styled.div`
-    padding: 2rem 0;
-    @media ${props => props.theme.mediaQueries.laptop}{
-        padding: 2rem;
-    }
+    position: relative;
     .container{
         margin-top: 1rem;
     }

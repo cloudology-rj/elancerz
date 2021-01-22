@@ -1,6 +1,4 @@
-import { useRouter } from 'next/router';
-
-import EditProfile from '@/components/global/EditProfile';
+import EditProfile from 'components/profile/editProfile/EditProfile';
 import Layout from '../../components/Base/Layout/Layout';
 
 // import { useAuthState } from 'react-firebase-hooks/auth';

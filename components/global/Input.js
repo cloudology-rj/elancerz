@@ -28,6 +28,7 @@ const InputStyle = styled.input`
   `}
 `;
 const Input = (props) => {
+  
   return <InputStyle {...props}></InputStyle>;
 };
 

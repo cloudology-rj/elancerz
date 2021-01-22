@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import DashBoardLayout from './DashBoardLayout';
+import DashBoardLayout from '../../components/dashboard/DashboardLayout/DashBoardLayout';
 import TopBar from 'components/dashboard/TopBar';
-import Freelancer from "./Freelancer"
+import Freelancer from "../../components/dashboard/DashboardLayout/Freelancer"
 
-import { VIEW } from './Constant'
-import Employeer from './Employeer';
+import { VIEW } from '../../components/dashboard/DashboardLayout/Constant'
+import Employeer from '../../components/dashboard/DashboardLayout/Employeer';
 
 const Dashboard = () => {
     const [currentView, setCurrentView] = useState(VIEW.FREELANCER)
