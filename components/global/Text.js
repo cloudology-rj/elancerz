@@ -75,6 +75,12 @@ line-height: 21.79px;
 
 `;
 
+export const ErrorMessage = styled(Body)`
+text-align:center;
+color: ${props => props.theme.colors.error};
+`
+
+
 
 
 export const PreTitle = styled.h5`

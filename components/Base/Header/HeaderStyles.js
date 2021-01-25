@@ -27,7 +27,6 @@ export const HeaderContent = styled.div`
 export const HeaderContainer = styled.header`
   position: relative;
   width: 100%;
-
   height: 100vh;
   background-image: url('/illustrations/main-illustration.svg');
   background-repeat: no-repeat;
@@ -37,6 +36,8 @@ export const HeaderContainer = styled.header`
   @media ${(props) => props.theme.mediaQueries.tablet} {
     background-position: right center;
   }
+
+  
 `;
 
 export const NavbarButton = styled.div`

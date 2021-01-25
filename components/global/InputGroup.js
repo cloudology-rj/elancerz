@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import Input from '@/components/global/Input';
 const InputGroup = ({error}, ...props) => {
 
-console.log(props);
 
     return (
         <div>

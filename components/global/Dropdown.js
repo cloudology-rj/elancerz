@@ -12,8 +12,8 @@ const DropdownContainer = styled.div`
   width: 100%;
   padding: 12 16px;
 
-  @media ${props => props.theme.mediaQueries.tablet}{
-    width:320px;
+  @media ${(props) => props.theme.mediaQueries.tablet} {
+    width: 320px;
   }
 `;
 
@@ -97,6 +97,10 @@ const Dropdown = ({ title, list, resetThenSet }) => {
   );
 };
 
-Dropdown.propTypes = {};
+Dropdown.propTypes = {
+  title: PropTypes.string.isRequired,
+  // list: Proptypes.array.isRequired,
+  resetThenSet: PropTypes.func.isRequired,
+};
 
 export default Dropdown;

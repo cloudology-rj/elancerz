@@ -1,9 +1,11 @@
 import { useRouter } from 'next/router';
-
+import {useState} from 'react';
 
 import { ButtonPrimary, ButtonTertiary } from '@/components/global/Button';
 import { HighlightColor } from '@/components/global/Text';
 import Container from '@/components/global/Container';
+import Modal from '@/components/global/Modal';
+import Signup from '../../account/Signup/Signup';
 import Input from '@/components/global/Input';
 import { LogoBig } from '@/components/global/Logo';
 
@@ -19,14 +21,14 @@ import {
 
 const Header = (props) => {
   const router = useRouter();
-
+  const [modalActive, setModalActive] = useState(false)
   return (
     <HeaderContainer>
       <NavbarContainer>
         <LogoBig />
 
         <NavbarButton>
-          <ButtonPrimary>Sign Up</ButtonPrimary>
+          <ButtonPrimary onClick={() => setModalActive(!modalActive)}>Sign Up</ButtonPrimary>
           <ButtonTertiary>Sign In</ButtonTertiary>
         </NavbarButton>
       </NavbarContainer>
@@ -49,6 +51,10 @@ const Header = (props) => {
           </ButtonContainer>
         </HeaderContent>
       </Container>
+
+      <Modal modalActive={modalActive} setModalActive={setModalActive} content={<Signup />}/>
+                    
+    
     </HeaderContainer>
   );
 };
