@@ -42,18 +42,33 @@ export const ButtonTertiary = styled.button`
   font-family: 'Open Sans', sans-serif;
   font-weight: bold;
   color: ${(props) => props.theme.colors.primaryBrand};
+  padding: 12px 24px;
+  border-radius: 24px;
   line-height: 21.79px;
   text-transform: uppercase;
   text-align: center;
-
+  transition: 200ms ease;
   display: flex;
   align-items: center;
+  justify-content: center;
+
+  ${(props) =>
+    props.fullWidth &&
+    css`
+      width: 100%;
+    `}
 
   ${(props) =>
     props.isCenter &&
     css`
-      justify-self: center;
+      
+      justify-content: center;
     `}
+
+  &:hover {
+    background: ${(props) => props.theme.colors.primaryBrand};
+    color: #fff;
+  }
 `;
 
 export const ButtonOpacity = styled.button`
@@ -62,7 +77,8 @@ export const ButtonOpacity = styled.button`
   padding: 8px;
   color: ${(props) => props.theme.colors.text};
   border-radius: 24px;
-  box-shadow: 0px 6px 2px -4px rgba(14, 19, 44, 0.08), inset 0px -1px 0px rgba(14, 19, 44, 0.24);
+  box-shadow: 0px 6px 2px -4px rgba(14, 19, 44, 0.08),
+    inset 0px -1px 0px rgba(14, 19, 44, 0.24);
   width: 40px;
   height: 40px;
   display: flex;
@@ -115,4 +131,41 @@ export const ButtonTransparent = styled.button`
   color: ${(props) => props.theme.colors.subtleText};
   outline: none;
   cursor: pointer;
+`;
+
+export const ButtonDanger = styled.button`
+  ${button};
+  background: ${(props) => props.theme.colors.error};
+  padding: 12px 24px 12px 24px;
+  border-radius: 22px;
+  font-size: ${(props) => props.theme.fontSizes.s4};
+  font-family: 'Open sans', sans-serif;
+  line-height: 22px;
+  font-weight: bold;
+  color: ${(props) => props.theme.colors.white};
+  outline: none;
+  cursor: pointer;
+`;
+
+export const ButtonIcon = styled.button`
+  ${button};
+  background: ${(props) => props.theme.colors.turqoise};
+  color: ${(props) => props.theme.colors.text};
+  text-transform: uppercase;
+  font-family: 'Open sans';
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1em;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  
+  ${(props) =>
+    props.isActive === true &&
+    css`
+      background: ${(props) => props.theme.colors.primaryBrand};
+      color: #fff;
+    `}
 `;

@@ -82,15 +82,11 @@ const Dropdown = ({ title, list, resetThenSet }) => {
 
       {isOpen && (
         <DropdownList>
-          <DropdownListItem onClick={() => selectItem('Top Rated')}>
-            Top Rated
-          </DropdownListItem>
-          <DropdownListItem onClick={() => selectItem('Date Joined')}>
-            Date Joined
-          </DropdownListItem>
-          <DropdownListItem onClick={() => selectItem('Services Completed')}>
-            Services Completed
-          </DropdownListItem>
+          {list.map(({ name, id }) => (
+            <DropdownListItem key={id} onClick={() => selectItem(name)}>
+              {name}
+            </DropdownListItem>
+          ))}
         </DropdownList>
       )}
     </DropdownContainer>

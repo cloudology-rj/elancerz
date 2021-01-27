@@ -8,13 +8,10 @@ import { PreTitle } from '@/components/global/Text';
 import { ListContainer, ListHeader } from './CategoryListStyles';
 
 const CategoryListToggle = ({ title, list, onToggleSelected }) => {
-
-console.log('list',list)
-
+ 
 
   const toggleActive = (id) => {
     onToggleSelected(id, title);
-
   };
 
   return (

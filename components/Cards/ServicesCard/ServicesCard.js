@@ -5,7 +5,7 @@ import { PreTitle, Bold, HighlightColor, HeaderThree } from '@/components/global
 import { CardContainer, FlexLeft, FlexRight, FlexSpaceBetween, FlexColumn, Paragraphs, FlexEnd } from './ServicesCardStyles';
 
 
-const ServicesCard = ({ serviceImage, serviceName, serviceFee, serviceCompleted }) => {
+const ServicesCard = ({ title, subtitle, fee, desc, del, edit }) => {
   return (
     <CardContainer>
       <FlexLeft>
@@ -14,21 +14,19 @@ const ServicesCard = ({ serviceImage, serviceName, serviceFee, serviceCompleted 
       <FlexRight>
         <FlexSpaceBetween>
           <FlexColumn>
-            <HeaderThree>Logo Design</HeaderThree>
-            <PreTitle>GRAPHIC DESIGN</PreTitle>
+            <HeaderThree>{title}</HeaderThree>
+            <PreTitle>{subtitle}</PreTitle>
           </FlexColumn>
-          <br/>
+          <br />
           <HeaderThree>
-            <HighlightColor>$50</HighlightColor>
+            <HighlightColor>{fee}</HighlightColor>
           </HeaderThree>
         </FlexSpaceBetween>
-        <Paragraphs>
-          Rhoncus egestas aliquet in diam eget proin velit. Nulla amet, dolor ultrices pellentesque tristique pellentesque bibendum at sollicitudin. Duis dui, in sem ac, condimentum. Phasellus curabitur mattis egestas tortor. Sit scelerisque dignissim ut dui gravida nunc. Nibh donec duis laoreet at. Tellus dui egestas at pellentesque. Scelerisque lacinia pulvinar in vehicula eget mi eu duis quis. Commodo orci condimentum ante pulvinar venenatis facilisis fermentum dictum viverra. Lectus id semper viverra elit phasellus turpis at.
-        </Paragraphs>
+        <Paragraphs>{desc}</Paragraphs>
         <FlexEnd>
-          <ButtonSecondary>DELETE</ButtonSecondary>
+          <ButtonSecondary onClick={del}>DELETE</ButtonSecondary>
           &emsp;
-          <ButtonPrimary>EDIT</ButtonPrimary>
+          <ButtonPrimary onClick={edit}>EDIT</ButtonPrimary>
         </FlexEnd>
       </FlexRight>
     </CardContainer>

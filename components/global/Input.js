@@ -1,8 +1,11 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
-import styled, {css} from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const InputStyle = styled.input`
+  position: relative;
+  outline: none;
   padding: 12px 16px 12px 16px;
   border-radius: 24px;
   height: 48px;
@@ -22,14 +25,60 @@ const InputStyle = styled.input`
     padding: 12px 16px;
   }
 
-  ${props => props.transparent && css`
-    background:transparent;
-  
-  `}
+  ${(props) =>
+    props.transparent &&
+    css`
+      background: transparent;
+    `}
+
+  &:focus {
+    outline: none;
+    box-shadow: 0px 0px 0px 4px rgba(225, 195, 64, 0.2);
+  }
+
+  ${(props) =>
+    props.success &&
+    css`
+      border: 1px solid #31d0aa;
+      box-shadow: 0px 0px 0px 4px rgba(49, 208, 170, 0.2);
+    `}
+
+  ${(props) =>
+    props.error &&
+    css`
+      border: 1px solid #d03131;
+      box-shadow: 0px 0px 0px 4px rgba(208, 49, 49, 0.2);
+    `}
 `;
-const Input = (props) => {
-  
-  return <InputStyle {...props}></InputStyle>;
+
+const Inputcontainer = styled.div`
+  position: relative;
+  width:100%;
+`;
+
+const IconValidation = styled.img`
+  position: absolute;
+  right: 18px;
+  top: 13px;
+  bottom: 18px;
+`;
+const Input = ({ error, success, ...props }) => {
+  return (
+    <Inputcontainer>
+      <InputStyle success={success} error={error} {...props} />
+
+      {error && (
+        <IconValidation src="/icons/error.svg" alt="error message icon" />
+      )}
+
+      {success && (
+        <IconValidation
+          src="/icons/success-check.svg"
+          alt="error message icon"
+        />
+      )}
+    </Inputcontainer>
+  );
 };
 
 Input.propTypes = {};

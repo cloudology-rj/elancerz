@@ -1,5 +1,6 @@
 // import App from 'next/app';
 import Theme from '../styles/theme';
+import '../styles/dropzone.custom.css';
 import GoogleFonts from 'next-google-fonts';
 import { GlobalStyles } from '../styles/globalStyles';
 import {IsMobileContextProvider} from '../components/Context/IsMobile'

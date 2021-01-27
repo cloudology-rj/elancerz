@@ -41,13 +41,13 @@ const Checkbox = (props) => {
   return (
     <div>
       <CheckboxStyle type="checkbox" id="check" {...props} />
-      <Checkmark for="check"></Checkmark>
+      <Checkmark htmlFor="check"></Checkmark>
     </div>
   );
 };
 
-Checkbox.propTypes = {
-  label: PropTypes.string.isRequired,
-};
+// Checkbox.propTypes = {
+//   label: PropTypes.string.isRequired,
+// };
 
 export default Checkbox;

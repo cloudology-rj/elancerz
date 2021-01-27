@@ -4,18 +4,6 @@ import ForgotPassword from './ForgotPassword/ForgotPassword';
 
 import {AccoutContainer} from './AccountStyles';
 
-const RenderPage = (section) => {
-  switch (section) {
-    case 'sign-up':
-      return <Signup />;
-
-    case 'sign-in':
-      return <Signin />;
-
-    case 'forgot-password':
-      return <ForgotPassword />;
-  }
-};
 
 const Account = ({ section }) => {
   return (

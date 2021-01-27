@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import PropTypes from 'prop-types';
 
@@ -12,7 +12,7 @@ import {
 
 import CategoryListToggle from '../CategoryList/CategoryListToggle';
 
-import data, { categoriesData, locationsData } from './data';
+import data from './data';
 
 import {
   FilterContainer,
@@ -24,14 +24,11 @@ import {
 const FilterSearch = ({ onToggleFilter }) => {
   const [filters, setFilters] = useState(data);
 
-  console.log(filters.locations);
+  console.log('inside filter component', filters);
 
+  //toggle all selected to be false
   const resetSelection = (data) =>
-    data.map((item) => {
-      const newItem = { ...item };
-      newItem.selected = false;
-      return newItem;
-    });
+    data.map((item) => ({ ...item, selected: false }));
 
   const resetPresets = () => {
     const { locations, categories } = filters;
@@ -39,23 +36,26 @@ const FilterSearch = ({ onToggleFilter }) => {
     const newLocations = resetSelection(locations);
     const newCategories = resetSelection(categories);
 
-    const resetFilter = { categories: newCategories, locations: newLocations };
-
-    setFilters(resetFilter);
+    setFilters({
+      ...filters,
+      locations: newLocations,
+      categories: newCategories,
+    });
+    console.log('INSIDE Reset Function', filters);
   };
 
   const toggleSelected = (id, title) => {
+    // get the data object
     const target = filters[title];
 
-    target.map((item) =>
+    target.filter((item) =>
       item.id === id ? (item.selected = !item.selected) : item
     );
 
     setFilters({ ...filters, [title]: target });
   };
 
-
-  const{locations,categories} = filters;
+  const { locations, categories } = filters;
   return (
     <FilterContainer>
       <FilterHeader>

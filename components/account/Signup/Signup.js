@@ -1,11 +1,13 @@
 import Image from 'next/image';
-
-import firebase from 'firebase/app';
+import Router from 'next/router';
 import React, { useState } from 'react';
 
+import { auth } from '../../../firebase/firebase';
 
-
-import { signInWithGoogle } from '../../../firebase/firebase';
+import {
+  signInWithGoogle,
+  signInWithFacebook,
+} from '../../../firebase/firebase';
 
 import signupSchema from './signupSchema';
 
@@ -20,14 +22,16 @@ import {
 import { ButtonPrimary, ButtonTertiary } from '@/components/global/Button';
 import Input from '@/components/global/Input';
 
-import { FormGroup } from './SignupStyles';
+import { FormGroup, SignupContainer, ButtonStepper } from './SignupStyles';
 
-const Signup = (props) => {
+
+
+const Signup = ({ isModal, onSwitch }) => {
   const [signupSuccess, setSignupSuccess] = useState(false);
   const [step, setStep] = useState(0);
 
   return (
-    <SignUpContainer>
+    <SignupContainer>
       <HeaderThree>Sign up</HeaderThree>
       <br />
 
@@ -45,8 +49,19 @@ const Signup = (props) => {
           // not running
           // validationSchema={testSchema2}
 
-          if (step === 3) {
-            console.log(values);
+          if (step === 1) {
+            const { email, username, password } = values;
+
+            auth
+              .createUserWithEmailAndPassword(email, password)
+              .then(() => {
+                alert('Account created');
+                Router.push('/dashboard');
+              })
+              .catch((err) => {
+                alert(err);
+                helpers.setStatus();
+              });
           } else {
             setStep(step + 1);
           }
@@ -58,9 +73,16 @@ const Signup = (props) => {
       </PreTitle>
 
       <PreTitle>
-        Already a member? <HighlightColor>Login</HighlightColor>{' '}
+        Already a member?{' '}
+        {isModal ? (
+          <HighlightColor onClick={() => onSwitch()}>Login</HighlightColor>
+        ) : (
+          <HighlightColor onClick={() => Router.push('/account/sign-in')}>
+            Login
+          </HighlightColor>
+        )}
       </PreTitle>
-    </SignUpContainer>
+    </SignupContainer>
   );
 };
 
@@ -77,12 +99,12 @@ const FormikStep = (
     case 0:
       return (
         <FormGroup>
-          <ButtonPrimary fullWidth>
+          <ButtonPrimary fullWidth onClick={signInWithFacebook}>
             <Image src="/icons/facebook-icon.svg" height="22px" width="22px" />
             Continue with Facebook
           </ButtonPrimary>
 
-          <ButtonTertiary isCenter onClick={signInWithGoogle}>
+          <ButtonTertiary isCenter fullWidth onClick={signInWithGoogle}>
             <Image src="/icons/google-icon.svg" height="22px" width="22px" />
             Continue with google
           </ButtonTertiary>
@@ -90,6 +112,7 @@ const FormikStep = (
           <Bold>Or</Bold>
 
           <Input
+            errors={errors.email}
             onBlur={handleBlur}
             type="email"
             name="email"
@@ -100,6 +123,13 @@ const FormikStep = (
           {errors.email && touched.email && (
             <ErrorMessage>{errors.email}</ErrorMessage>
           )}
+
+{
+           // handles switching the steps
+            <ButtonStepper fullWidth type="submit">
+              Continue
+            </ButtonStepper>
+          }
         </FormGroup>
       );
     case 1:
@@ -126,6 +156,13 @@ const FormikStep = (
           {errors.password && touched.password && (
             <ErrorMessage>{errors.password}</ErrorMessage>
           )}
+
+{
+           // handles switching the steps
+            <ButtonStepper fullWidth type="submit">
+              Sign up
+            </ButtonStepper>
+          }
         </FormGroup>
       );
 

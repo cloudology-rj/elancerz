@@ -42,7 +42,7 @@ const StyledModal = styled.div`
       transform: translateY(500%);
       animation: float 500ms forwards;
       @media ${(props) => props.theme.mediaQueries.laptop} {
-        max-width: 700px;
+        max-width: 540px;
       }
       .close-btn {
         position: absolute;

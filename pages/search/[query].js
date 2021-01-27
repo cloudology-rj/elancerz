@@ -48,7 +48,11 @@ const Category = (props) => {
             <div>
               <SearchQueryTitle>Search "{router.query.query}"</SearchQueryTitle>
               <FlexAlignCenter>
-                <Dropdown title="Filter by" resetThenSet={resetThenSet} />
+                <Dropdown
+                  title="Filter by"
+                  resetThenSet={resetThenSet}
+                  list={options}
+                />
 
                 <FlexBetween>
                   <span onClick={() => setToggleFilter(!toggleFilter)}>
@@ -149,6 +153,21 @@ const SearchQueryTitle = styled(HeaderThree)`
 
 const MobileInput = styled.div`
   @media ${(props) => props.theme.mediaQueries.laptop} {
-    display:none;
+    display: none;
   }
 `;
+
+const options = [
+  {
+    name: 'Top Rated',
+    id: 1,
+  },
+  {
+    name: 'Date Joined',
+    id: 1,
+  },
+  {
+    name: 'Services Completed',
+    id: 1,
+  },
+];

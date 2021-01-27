@@ -47,12 +47,7 @@ const MultiStep = ({ currentStep, onSetStep, renderItems, ...props }) => {
               handleBlur
             )
           }
-          {
-            // handles switching the steps
-            <ButtonStepper fullWidth type="submit">
-              Continue
-            </ButtonStepper>
-          }
+        
         </FormContainer>
       )}
     </Formik>
