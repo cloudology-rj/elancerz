@@ -1,5 +1,17 @@
 import styled from 'styled-components';
 
+export const FlexLine = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+  position: static;
+  width: 100%;
+  height: 1px;
+  background: #EEFBFB;
+`
+
+
 export const GridContainer = styled.div`
 display: grid;
 @media ${(props) => props.theme.mediaQueries.mobile} {

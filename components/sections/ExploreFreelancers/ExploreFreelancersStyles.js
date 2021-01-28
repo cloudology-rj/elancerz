@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import mixins from '../../../styles/mixins';
+
 export const CategoriesContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(232px, 1fr));
@@ -21,4 +23,17 @@ export const ExploreHeader = styled.header`
 export const YellowTextBackground = styled.span`
   background: ${(props) => props.theme.colors.quarternaryBrand};
   padding: 5px;
+  display: inline-block;
 `;
+
+export const HeaderFlex = styled.div`
+  ${mixins.flexBetween};
+`;
+
+export const Flexbetween = styled.div`
+  ${mixins.flexAligned}
+  gap:6px;
+`;
+
+
+

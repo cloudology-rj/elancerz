@@ -12,6 +12,7 @@ import {
   HighlightColor,
   Body,
   ErrorMessage,
+  Divider,
 } from '@/components/global/Text';
 import { ButtonPrimary, ButtonTertiary } from '@/components/global/Button';
 import Input from '@/components/global/Input';
@@ -25,8 +26,6 @@ import {
 } from './SigninStyles';
 
 const SignIn = ({ isModal, onSwitch, onPasswordReset }) => {
-
-
   return (
     <SigninContainer>
       <HeaderThree>Log in to your account</HeaderThree>
@@ -35,11 +34,12 @@ const SignIn = ({ isModal, onSwitch, onPasswordReset }) => {
         <Image src="/icons/facebook-icon.svg" height="22px" width="22px" />
         Continue with Facebook
       </ButtonPrimary>
-      <ButtonTertiary nClick={() => signInWithGoogle()}>
+      <ButtonTertiary fullWidth isCenter onClick={() => signInWithGoogle()}>
         <Image src="/icons/google-icon.svg" height="22px" width="22px" />
         Continue with google
       </ButtonTertiary>
-      <Bold>Or</Bold>
+      <Divider>or</Divider>
+
       <Formik
         initialValues={{
           email: '',

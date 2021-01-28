@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Checkmark = styled.label`
+  cursor: pointer;
   display: block;
   width: 32px;
   height: 32px;

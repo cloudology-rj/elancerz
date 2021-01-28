@@ -79,7 +79,7 @@ const EditProfile = (props) => {
 
       <HeroImage>
         <ProfileBanner>
-          <ButtonPrimary>
+          <ButtonPrimary onClick={cancelClick}>
             <FlexBetween>
               <Image src='/icons/check-white.svg' width={20} height={20} />
             &nbsp;&nbsp;SAVE CHANGES
@@ -131,7 +131,7 @@ const EditProfile = (props) => {
           &nbsp;&nbsp;
           <PreTitle> DRAG CARDS TO CHANGE ORDER</PreTitle>
         </DraggingArea>
-        
+
       </FormContainer>
 
 

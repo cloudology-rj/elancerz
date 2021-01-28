@@ -7,6 +7,8 @@ const Settings = () => {
     const router = useRouter()
     const [isMobile] = useContext(IsMobileContext)
 
+
+    
     useEffect(() => {
         if (!isMobile){
             router.push('/settings/account-information')

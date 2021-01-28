@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 const button = css`
   border: none;
   background: none;
+  cursor: pointer;
 
   img {
     margin-right: 10px;
@@ -34,6 +35,18 @@ export const ButtonPrimary = styled.button`
     css`
       width: 100%;
     `}
+
+
+    ${(props) =>
+    props.isSlider &&
+    css`
+      ${props.isSlider}
+    `}
+`;
+
+export const ButtonPrimaryIconOnly = styled(ButtonPrimary)`
+  padding: 12px;
+  border-radius: 50%;
 `;
 
 export const ButtonTertiary = styled.button`
@@ -61,7 +74,6 @@ export const ButtonTertiary = styled.button`
   ${(props) =>
     props.isCenter &&
     css`
-      
       justify-content: center;
     `}
 
@@ -107,7 +119,9 @@ export const ButtonPill = styled.button`
     `}
 `;
 
-export const ButtonSecondary = styled.button`
+export const ButtonSecondary = styled.button.attrs((props) => ({
+  className: props.className,
+}))`
   ${button}
   background: ${(props) => props.theme.colors.turqoise};
   padding: 12px 24px 12px 24px;
@@ -117,6 +131,15 @@ export const ButtonSecondary = styled.button`
   line-height: 22px;
   font-weight: bold;
   color: ${(props) => props.theme.colors.primaryBrand};
+
+  ${(props) =>
+    props.navigate === 'right'
+      ? css`
+  content: "hello";
+  `
+      : css`
+  content: "hi"
+  `}
 `;
 
 export const ButtonTransparent = styled.button`
@@ -161,11 +184,12 @@ export const ButtonIcon = styled.button`
   border-radius: 50%;
   width: 48px;
   height: 48px;
-  
+
   ${(props) =>
     props.isActive === true &&
     css`
       background: ${(props) => props.theme.colors.primaryBrand};
       color: #fff;
     `}
+    
 `;

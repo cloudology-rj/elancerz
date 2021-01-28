@@ -18,6 +18,7 @@ import {
   PreTitle,
   HighlightColor,
   ErrorMessage,
+  Divider,
 } from '@/components/global/Text';
 import { ButtonPrimary, ButtonTertiary } from '@/components/global/Button';
 import Input from '@/components/global/Input';
@@ -109,7 +110,7 @@ const FormikStep = (
             Continue with google
           </ButtonTertiary>
 
-          <Bold>Or</Bold>
+          <Divider>or</Divider>
 
           <Input
             errors={errors.email}

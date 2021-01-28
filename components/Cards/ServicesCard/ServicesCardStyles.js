@@ -20,6 +20,16 @@ export const CardContainer = styled.div`
 
 `;
 
+
+export const FlexNav = styled.div`
+  display: flex;
+  justify-content: space-between;
+  top: -74px;
+  position: relative;
+`;
+
+
+
 export const FlexColumn = styled.div`
   display: flex;
   flex-direction:column;
@@ -49,12 +59,20 @@ export const FlexEnd = styled.div`
   margin: 1em 0 1em 0;
 `;
 
+
+
 export const FlexLeft = styled.div`
-  display: flex;  
+  display: flex; 
   @media ${(props) => props.theme.mediaQueries.desktop} {
-    flex:.5;
+    flex:.3;
+    margin: .5em 2em 2.5em 0;
   }
-  justify-content: space-around;
+  @media ${(props) => props.theme.mediaQueries.largeScreen} {
+    flex:.3;
+    margin: .5em 2em 2.5em 0;
+  }
+  justify-content: center;
+  margin: 0 0 2.5em 0;
 `;
 
 export const FlexRight = styled.div`

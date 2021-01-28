@@ -16,9 +16,10 @@ const people = [
 ]
 
 const useWorkApprovalPending = () => {
+
     const [ approvalTitle ] = useState('Work approval pending');
     const [ shortText ] = useState('Odio elit in libero nulla mattis praesent nec. Et mi elit sed arcu velit.');
-    const [approvalLink] = useState('link');
+    const [approvalLink] = useState('');
     const [approvalButtonText] = useState('Check Milestone');
 
     return { approvalTitle, people, shortText, approvalButtonText, approvalLink }

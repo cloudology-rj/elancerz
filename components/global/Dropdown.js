@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import styled from 'styled-components';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Image from 'next/image';
 
@@ -31,10 +31,10 @@ const DropdownList = styled.ul`
   z-index: 100;
   background: ${(props) => props.theme.colors.primaryBrand};
   position: absolute;
-  bottom: -170px;
+  // bottom: -170px;
   left: 0;
   width: 100%;
-  padding: 10px;
+  margin-top: 14px;
   box-shadow: 0px 4px 8px -4px rgba(14, 19, 44, 0.16),
     0px 1px 1px rgba(14, 19, 44, 0.04);
   border-radius: 8px;
@@ -61,42 +61,69 @@ const DropdownListItem = styled.button`
   }
 `;
 
-const Dropdown = ({ title, list, resetThenSet }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [headerTitle, setHeaderTitle] = useState(title);
+class Dropdown extends Component {
+  constructor(props) {
+    super(props);
 
-  const selectItem = (item) => {
-    setHeaderTitle(item);
-    toggleList();
-    resetThenSet(item);
+    this.state = {
+      isOpen: false,
+      headerTitle: this.props.title,
+    };
+  }
+
+
+  static getDerivedStateFromProps(nextProps) {
+    const { list, title } = nextProps;
+    const selectedItem = list.filter((item) => item.selected);
+  
+    if (selectedItem.length) {
+      return {
+        headerTitle: selectedItem[0].title,
+      };
+    }
+    return { headerTitle: title };
+  }
+
+  toggleOpen = () => {
+    this.setState((prevState) => ({
+      isOpen: !prevState.isOpen,
+    }));
   };
 
-  const toggleList = () => setIsOpen(!isOpen);
+  selectItem = (name) => {
+    const { resetThenSet } = this.props;
 
-  return (
-    <DropdownContainer>
-      <DropdownHeader onClick={toggleList}>
-        <Body>{headerTitle}</Body>
-        <Image src="/icons/arrowDown.svg" width="12px" height="6px" />
-      </DropdownHeader>
+    this.setState(
+      {
+        headerTitle: name,
+        isOpen: false,
+      },
+      () => resetThenSet(name)
+    );
+  };
 
-      {isOpen && (
-        <DropdownList>
-          {list.map(({ name, id }) => (
-            <DropdownListItem key={id} onClick={() => selectItem(name)}>
-              {name}
-            </DropdownListItem>
-          ))}
-        </DropdownList>
-      )}
-    </DropdownContainer>
-  );
-};
+  render() {
+    const { isOpen, headerTitle } = this.state;
+    const { list } = this.props;
+    return (
+      <DropdownContainer>
+        <DropdownHeader onClick={this.toggleOpen}>
+          <Body>{headerTitle}</Body>
+          <Image src="/icons/arrowDown.svg" width="12px" height="6px" />
+        </DropdownHeader>
 
-Dropdown.propTypes = {
-  title: PropTypes.string.isRequired,
-  // list: Proptypes.array.isRequired,
-  resetThenSet: PropTypes.func.isRequired,
-};
+        {isOpen && (
+          <DropdownList>
+            {list.map(({ name, id }) => (
+              <DropdownListItem key={name} onClick={() => this.selectItem(name)}>
+                {name}
+              </DropdownListItem>
+            ))}
+          </DropdownList>
+        )}
+      </DropdownContainer>
+    );
+  }
+}
 
 export default Dropdown;

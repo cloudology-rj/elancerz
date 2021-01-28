@@ -20,6 +20,9 @@ const Freelancer = () => {
     const { accountLabel, accountImageUrl, percent, acountAmount, isFreelancer } = useAcountDetails()
     const { latestTransactionLabel, latestTransactionList, isEmployeer } =  useLatestTranstactions()
 
+
+
+
   return <Boxes>
       <Box>
         <TopService 

@@ -1,8 +1,20 @@
 import styled from 'styled-components';
 import Image from 'next/image';
 
+export const GrabContainer = styled.div`
+  cursor: grab;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: left;
+  background: transparent;
+  padding: 0;
+  padding-right: 30px;
+`;
+
 
 export const CardContainer = styled.div`
+  cursor: grab;
   display: flex;
   flex-direction: column;
   align-items: left;
@@ -16,10 +28,10 @@ export const CardContainer = styled.div`
   height:270px;
   min-width:240px;
   min-height:270px;
-  margin-right: 30px;
 `;
 export const CardImage = styled(Image)`
   border-radius: 4px 4px 0 0;
+  cursor: grab;
 `;
 
 export const FlexContainer = styled.div`
@@ -31,6 +43,7 @@ padding: .5em 1em 0em 1em ;
 
 export const FlexBottom = styled.div`
 display:flex;
+cursor: pointer;
 align-items: left;
 justify-content: left;
 padding: .5em 1em 0em 1em ;

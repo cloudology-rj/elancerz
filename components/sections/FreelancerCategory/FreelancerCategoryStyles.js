@@ -9,3 +9,6 @@ export const FreelancersContainer = styled.div`
 export const FreelanceCategoryContainer = styled.div`
 margin: 25px 0;
 `
+
+
+

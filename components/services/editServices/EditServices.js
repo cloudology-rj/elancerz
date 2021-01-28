@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import styled from 'styled-components';
 import { HeaderThree, HeaderTwo, Bold, PreTitle } from '@/components/global/Text';
-import { ButtonPrimary, ButtonTertiary, ButtonSecondary, ButtonIcon } from '@/components/global/Button';
+import { ButtonPrimary, ButtonTertiary, ButtonSecondary, ButtonIcon,ButtonDanger } from '@/components/global/Button';
 import Input from '@/components/global/Input';
 import TextArea from '@/components/global/TextArea';
 import Dropdown from '@/components/global/Dropdown';
@@ -11,10 +11,10 @@ import Dropzone from '@/components/global/Dropzone';
 import {
   GridContainer, FlexSpaceBetween, FlexCenter, Flex40, FlexColumn, FlexRow, Paragraphs, FlexLeft, FlexRight, FlexForm, FlexEnd,
   FlexYT, FlexTotal, FlexIconR, Flex50L, Flex50R, FlexIconOnly, FlexText
-} from '../newServices/NewServicesStyles';
+} from '../editServices/EditServicesStyles';
 
 
-import { SortableContainer, SortableElement, sortableHandle, } from 'react-sortable-hoc';
+import { SortableContainer, SortableElement,sortableHandle, } from 'react-sortable-hoc';
 import arrayMove from 'array-move';
 
 
@@ -33,20 +33,25 @@ const options = [
 const links = [
   {
     id: 1,
-    link: '',
+    link: 'https://www.youtube.com/watch?v=kC-P_yW0kuE',
   },
 ];
 
 const services = [
   {
     id: 1,
-    desc: '',
-    fee: '0'
+    desc: 'Sketch and Wireframes',
+    fee: '100'
+  },
+  {
+    id: 2,
+    desc: 'Mockups and Prototypes',
+    fee: '150'
   },
 ];
 
 
-const NewServices = (props) => {
+const EditServices = (props) => {
 
   const router = useRouter();
   const backService = (e) => {
@@ -54,7 +59,7 @@ const NewServices = (props) => {
   }
 
 
-
+  
   const [ytLinks, setYtLinks] = useState(links)
   const [milestone, setMilestone] = useState(services)
   const [total, setTotal] = useState(0)
@@ -70,12 +75,12 @@ const NewServices = (props) => {
   const SortableItem = SortableElement(props => {
     const { value: item } = props;
     return (
-
+      
       <FlexForm id={'milestone-' + item.id}>
         <Flex50L>
-          <DragHandle />
+            <DragHandle />          
             &emsp;
-            <Input defaultValue={item.desc} onChange={(e) => { setDesc(e.target.value, item.id) }} />
+            <Input defaultValue={item.desc}  onChange={(e) => { setDesc(e.target.value, item.id) }}  />
         </Flex50L>
         <Flex50R>
           <Image src={'/icons/dollar-gray.svg'} width={16} height={30} />
@@ -109,86 +114,86 @@ const NewServices = (props) => {
   });
 
 
-  // milestone
+// milestone
 
-  const addLink = (e) => {
-    const yt = Object.keys(ytLinks)
+const addLink = (e) => {
+  const yt = Object.keys(ytLinks)
 
-    if (yt.length >= 1) {
-      const last = ytLinks[yt[yt.length - 1]].id;
-      const newlinks = [
-        {
-          link: '',
-          id: last + 1,
-        },
-      ];
-      setYtLinks([...ytLinks, ...newlinks])
-
-    } else {
-      setYtLinks([...links])
-
-    }
-
-
-  }
-
-  const addMilestone = (e) => {
-    const sr = Object.keys(milestone)
-    const last = milestone[sr[sr.length - 1]].id;
-    const newServices = [
+  if (yt.length >= 1) {
+    const last = ytLinks[yt[yt.length - 1]].id;
+    const newlinks = [
       {
+        link: '',
         id: last + 1,
-        desc: '',
-        fee: '0'
       },
     ];
+    setYtLinks([...ytLinks, ...newlinks])
 
-
-    setMilestone([...milestone, ...newServices])
-
-    console.log(milestone);
-
-  }
-
-
-  const delMilestone = (id) => {
-
-    const sr = Object.keys(milestone)
-    if (sr.length > 1) {
-      const r = milestone.filter(item => item.id !== id);
-      setMilestone(r)
-
-      const total = milestone.reduce((total, obj) => parseInt(obj.fee) + parseInt(total), parseInt(0))
-      const c = document.getElementById('fee-' + id).value
-      const n = Math.abs(total - c)
-      document.getElementById('total').innerHTML = "$ " + n
-
-      document.getElementById('milestone-' + id).remove()
-    }
-
+  } else {
+    setYtLinks([...links])
 
   }
 
-  const countTotal = (e, id) => {
-    const r = milestone.filter(item => item.id === id);
-    r[0].fee = e
+
+}
+
+const addMilestone = (e) => {
+  const sr = Object.keys(milestone)
+  const last = milestone[sr[sr.length - 1]].id;
+  const newServices = [
+    {
+      id: last + 1,
+      desc: '',
+      fee: '0'
+    },
+  ];
+  
+  
+  setMilestone([...milestone, ...newServices])
+
+  console.log(milestone);
+
+}
+
+
+const delMilestone = (id) => {
+  
+  const sr = Object.keys(milestone)
+  if(sr.length >1){
+    const r = milestone.filter(item => item.id !== id);  
+    setMilestone(r)
 
     const total = milestone.reduce((total, obj) => parseInt(obj.fee) + parseInt(total), parseInt(0))
-    document.getElementById('total').innerHTML = "$ " + total
+    const c = document.getElementById('fee-' + id).value
+    const n = Math.abs(total - c)
+    document.getElementById('total').innerHTML  = "$ "+n  
 
+    document.getElementById('milestone-' + id).remove()      
   }
 
-  const setDesc = (e, id) => {
-    const r = milestone.filter(item => item.id === id);
-    r[0].desc = e
-  }
+
+}
+
+const countTotal = (e, id) => {
+  const r = milestone.filter(item => item.id === id);
+  r[0].fee = e
+  
+  const total = milestone.reduce((total, obj) => parseInt(obj.fee) + parseInt(total), parseInt(0))
+  document.getElementById('total').innerHTML  = "$ "+total    
+    
+}
+
+const setDesc = (e, id) => {
+  const r = milestone.filter(item => item.id === id);
+  r[0].desc = e
+}
 
 
   return (
     <GridContainer>
       {/* title and add button */}
       <FlexSpaceBetween>
-        <HeaderThree>Add new service</HeaderThree>
+        <HeaderThree>Edit service</HeaderThree>
         <FlexIconOnly>
           <ButtonIcon>
             <Image src={'/icons/bulb-primary.svg'} width={12.61} height={18.33} />
@@ -211,7 +216,7 @@ const NewServices = (props) => {
             <FlexForm>
               <FlexLeft>
                 <Paragraphs>Name of Service</Paragraphs>
-                <Input placeholder='Enter name of service here' />
+                <Input value="Landing Page Design" placeholder='Enter name of service here' />
               </FlexLeft>
               <br></br>
               <FlexRight>
@@ -220,7 +225,7 @@ const NewServices = (props) => {
                   &emsp;
                   <FlexRow>
                     <HeaderThree>$&nbsp;</HeaderThree>
-                    <Input placeholder='20.00' />
+                    <Input value="250.00" placeholder='20.00' />
                   </FlexRow>
                 </FlexForm>
               </FlexRight>
@@ -229,7 +234,7 @@ const NewServices = (props) => {
             <FlexForm>
               <FlexColumn>
                 <Paragraphs>Description</Paragraphs>
-                <TextArea placeholder='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nibh dui, mattis odio sit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nibh dui, mattis odio sit.' />
+                <TextArea value={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nibh dui, mattis odio sit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nibh dui, mattis odio sit."} placeholder='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nibh dui, mattis odio sit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nibh dui, mattis odio sit.' />
               </FlexColumn>
             </FlexForm>
 
@@ -265,17 +270,26 @@ const NewServices = (props) => {
             {ytLinks.map((data, index) => (
               <FlexForm key={index}>
                 <FlexLeft>
-                  <Input placeholder="Enter link here" />
+                  <Input success defaultValue={data.link} placeholder="Enter link here"/>
                 </FlexLeft>
                 <FlexYT>
                   &emsp;
+                {
+                data.link == "" ? 
                 <ButtonSecondary>Embed</ButtonSecondary>
+                :
+                <ButtonDanger>
+                  <Image src={'/icons/bin-white.svg'} width={18} height={20} />
+                  &nbsp;
+                  REMOVE
+                </ButtonDanger>
+                }                
                 </FlexYT>
               </FlexForm>
             ))}
 
             <FlexForm >
-              <ButtonPrimary onClick={addLink}>
+              <ButtonPrimary  onClick={addLink}>
                 <Image src={'/icons/add-white.svg'} width={12.83} height={12.83} />
                 &nbsp;
                 MORE
@@ -322,7 +336,7 @@ const NewServices = (props) => {
           <FlexEnd>
             <ButtonTertiary onClick={backService}>CANCEL</ButtonTertiary>
             &emsp;
-            <ButtonPrimary onClick={backService}>ADD</ButtonPrimary>
+            <ButtonPrimary  onClick={backService}>SAVE CHANGES</ButtonPrimary>
           </FlexEnd>
         </Flex40>
       </FlexCenter>
@@ -334,4 +348,4 @@ const NewServices = (props) => {
 
 
 
-export default NewServices;
+export default EditServices;

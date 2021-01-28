@@ -3,26 +3,29 @@ import Image from 'next/image';
 import PropTypes from 'prop-types';
 
 import { PreTitle, Bold } from '@/components/global/Text';
-import { CardContainer,FlexBottom, CardImage, FlexContainer } from './ProfileServicesCardStyles';
+import { CardContainer, FlexBottom, CardImage, FlexContainer, GrabContainer } from './ProfileServicesCardStyles';
 
 
-const ProfileServicesCard = ({serviceImage,serviceName, serviceFee, serviceCompleted }) => {
+const ProfileServicesCard = ({ serviceImage, serviceName, serviceFee, serviceCompleted, toggle }) => {
   return (
-    <CardContainer>
-      <CardImage
-        src={serviceImage}
-        width="240px"
-        height="240px"
-      />
-      <FlexContainer>
-        <Bold>{serviceName}</Bold>
-        <Bold>{serviceFee}</Bold>
-      </FlexContainer>
-      <FlexBottom>
-        <PreTitle>{serviceCompleted}  Services Completed</PreTitle>
-      </FlexBottom>
-      <br/>
-    </CardContainer>
+    <GrabContainer id="grabDiv">
+      <CardContainer>
+        <CardImage
+          src={serviceImage}
+          width="240px"
+          height="240px"
+        />
+        <FlexContainer>
+          <Bold>{serviceName}</Bold>
+          <Bold>{serviceFee}</Bold>
+        </FlexContainer>
+        <FlexBottom onClick={toggle}>
+          <PreTitle>{serviceCompleted}  Services Completed</PreTitle>
+        </FlexBottom>
+        <br />
+      </CardContainer>
+    </GrabContainer>
+
   );
 };
 

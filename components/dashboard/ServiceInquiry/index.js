@@ -9,8 +9,18 @@ import {
 } from './ServiceInquiryStyles'
 
 import Person from './Person';
+import { useRouter } from 'next/router';
 
 const ServiceInquiry = ({ inquiryTitle, inquiryLink,  inquiryButtonText, people, shortText }) => {
+
+    const router = useRouter();
+    const gotoMsg = (e) => {
+        if(inquiryButtonText=="Check Milestone"){
+            router.push('/profile')
+        }else{
+            router.push('/messages')
+        }
+    }
 
   return (
         <Wrapper>
@@ -20,7 +30,8 @@ const ServiceInquiry = ({ inquiryTitle, inquiryLink,  inquiryButtonText, people,
                 { people && people.map((person, index) => <Person key={index} imageUrl={person.imageUrl} />)}
             </Inquiry>
             <Text>{ shortText }</Text>
-            <ButtonPrimary href={inquiryLink}>{ inquiryButtonText }</ButtonPrimary>
+            {/* <ButtonPrimary href={inquiryLink}>{ inquiryButtonText }</ButtonPrimary> */}
+            <ButtonPrimary onClick={gotoMsg}>{ inquiryButtonText }</ButtonPrimary>
         </Wrapper>
   )
 };
