@@ -17,8 +17,8 @@ module.exports = {
     async rewrites() {
         return [
           {
-            source: '/api/:path*',
-            destination: 'https://ppm-backend.tk/:path*',
+            source: '/rest/v1/:path*',
+            destination: 'https://ppm-backend.tk/rest/v1/:path*',
           },
         ]
       }
