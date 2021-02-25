@@ -19,11 +19,13 @@ import {
   NavbarButton,
   ButtonContainer,
   ButtonSecondaryStyle,
+  HeaderForm,
 } from './HeaderStyles';
 
 const Header = (props) => {
   const router = useRouter();
 
+  const [keyword, setKeyword] = useState('');
   const [showSignin, setShowSignin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
@@ -48,6 +50,16 @@ const Header = (props) => {
     setShowSignin(!showSignin);
   };
 
+  const HandleInput = (e) => {
+    setKeyword(e.target.value);
+  };
+
+  const HandleSubmit = (e) => {
+    e.preventDefault();
+
+    router.push(`/search/${keyword}`);
+  };
+
   return (
     <HeaderContainer>
       <NavbarContainer>
@@ -66,10 +78,18 @@ const Header = (props) => {
         <HeaderContent>
           <HeroTitle>
             Looking for the perfect
-            <HighlightColor> freelance services</HighlightColor>
+            <HighlightColor> freelance services </HighlightColor> 
             for your business?
           </HeroTitle>
-          <Input type="text" placeholder="Try logo design" />
+          <HeaderForm onSubmit={HandleSubmit}>
+            <Input
+            
+              type="text"
+              placeholder="Try logo design"
+              value={keyword}
+              onChange={HandleInput}
+            />
+          </HeaderForm>
 
           <ButtonContainer>
             <ButtonPrimary onClick={() => router.push('/account/sign-up')}>

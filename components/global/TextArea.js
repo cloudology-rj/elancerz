@@ -1,8 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import styled, {css} from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const TextAreaStyle = styled.textarea`
+resize: none;
   padding: 12px 16px 12px 16px;
   border-radius: 24px;
   height: 9em;
@@ -26,9 +26,16 @@ const TextAreaStyle = styled.textarea`
     background:transparent;
   
   `}
+
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0px 0px 0px 4px rgba(225, 195, 64, 0.2);
+  }
+  
 `;
-const TextArea = (props) => {
-  return <TextAreaStyle  {...props}></TextAreaStyle>;
+const TextArea = ({ name, id, reference, placeHolder, defaultValue, props }) => {
+  return <TextAreaStyle placeHolder={placeHolder} defaultValue={defaultValue} {...props} name={name} id={id} ref={reference}></TextAreaStyle>;
 };
 
 TextArea.propTypes = {};

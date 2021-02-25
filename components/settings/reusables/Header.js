@@ -1,8 +1,8 @@
-import React, {useContext} from 'react'
+import { useContext } from 'react';
 import {useRouter} from 'next/router'
 import Image from 'next/image'
 import styled from 'styled-components'
-import {IsMobileContext} from 'components/Context/IsMobile'
+import {IsMobileContext} from 'context/IsMobile'
 import {ButtonPrimary} from '../../global/Button'
 
 const StyledHeader = styled.div`

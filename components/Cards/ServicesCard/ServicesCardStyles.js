@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import Image from 'next/image';
-
 
 export const CardContainer = styled.div`
   display: flex;
@@ -72,7 +70,8 @@ export const FlexLeft = styled.div`
     margin: .5em 2em 2.5em 0;
   }
   justify-content: center;
-  margin: 0 0 2.5em 0;
+  margin: 0 0 -2.5em 0;
+  
 `;
 
 export const FlexRight = styled.div`

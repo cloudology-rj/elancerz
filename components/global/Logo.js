@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { LogoText, HeaderThree } from '@/components/global/Text';
+import Logo from '../../public/images/LogoDark.svg';
 
 const LogoContainer = styled.div`
   display: flex;
@@ -13,12 +14,7 @@ const LogoContainer = styled.div`
 export const LogoBig = (props) => {
   return (
     <LogoContainer>
-      <Image
-        src="/illustrations/logo.svg"
-        alt="Elancerz Logo"
-        width="53"
-        height="37"
-      />
+      <Logo />
       <LogoText color="dark">Elancerz</LogoText>
     </LogoContainer>
   );
@@ -28,26 +24,15 @@ export const LogoBig = (props) => {
 export const LogoSmall = () => {
   return (
     <LogoContainer>
-      <Image
-        src="/illustrations/logo.svg"
-        alt="Elancerz Logo"
-        width="53"
-        height="37"
-      />
+      <Logo />
       <HeaderThree>Elancerz</HeaderThree>
     </LogoContainer>
   );
 };
 
-
 // Shows Only Image
 export const LogoImage = () => {
-  return(
-    <Image
-        src="/illustrations/logo.svg"
-        alt="Elancerz Logo"
-        width="53"
-        height="37"
-      />
-  )
-}
+  return (
+    <Logo />
+  );
+};

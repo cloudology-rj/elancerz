@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import Image from 'next/image';
+import ReactDOM from 'react-dom';
 
 import { Body } from '@/components/global/Text';
 
@@ -61,6 +62,20 @@ const DropdownListItem = styled.button`
   }
 `;
 
+/*
+
+How to use dropdown
+Provide a parent  state that includes
+-> state for that was selected ( we might need or not depends on the situation)
+-> state for options which is stored in array of object
+->  title fallback if no options were set to true
+
+ the only two state you'll used
+  state that contains our options -> const [options, setOptions] = useState(optionsList);
+  state that will handle an option that was selected ->  const [selected, setSelected] = useState('');
+
+*/
+
 class Dropdown extends Component {
   constructor(props) {
     super(props);
@@ -71,40 +86,80 @@ class Dropdown extends Component {
     };
   }
 
+  componentDidMount() {
+    document.addEventListener('click', this.handleClickOutside, true);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.handleClickOutside, true);
+  }
+
+  handleClickOutside = (event) => {
+    const domNode = ReactDOM.findDOMNode(this);
+
+    if (!domNode || !domNode.contains(event.target)) {
+      this.setState({
+        isOpen: false,
+      });
+    }
+  };
 
   static getDerivedStateFromProps(nextProps) {
-    const { list, title } = nextProps;
-    const selectedItem = list.filter((item) => item.selected);
-  
+    const { options, title } = nextProps;
+    // checks if there is an option that's true
+    const selectedItem = options.filter((item) => item.selected);
+
+    //sets the current header if there is
     if (selectedItem.length) {
       return {
-        headerTitle: selectedItem[0].title,
+        headerTitle: selectedItem[0].name,
       };
     }
+    // if no option were found set the title as label
     return { headerTitle: title };
   }
 
+  //show or hide dropdown
   toggleOpen = () => {
     this.setState((prevState) => ({
       isOpen: !prevState.isOpen,
     }));
   };
 
-  selectItem = (name) => {
-    const { resetThenSet } = this.props;
-
+  // sets the item
+  selectItem = (name, id) => {
     this.setState(
       {
         headerTitle: name,
         isOpen: false,
       },
-      () => resetThenSet(name)
+      // resets the option after selecting an option
+      () => this.resetOptions(id)
     );
+  };
+
+  //resets our option
+  resetOptions = (id) => {
+    const { options, onSetOptions, onSetSelected } = this.props;
+
+    //clone our options
+    const newOptions = [...options];
+
+    // filters and set the current option to be true while rest are false
+    newOptions.filter((item) =>
+      item.id === id ? (item.selected = true) : (item.selected = false)
+    );
+
+    // set the new Options
+    onSetOptions(newOptions);
+    // set the selected
+    onSetSelected(id);
   };
 
   render() {
     const { isOpen, headerTitle } = this.state;
-    const { list } = this.props;
+    const { options } = this.props;
+
     return (
       <DropdownContainer>
         <DropdownHeader onClick={this.toggleOpen}>
@@ -114,8 +169,11 @@ class Dropdown extends Component {
 
         {isOpen && (
           <DropdownList>
-            {list.map(({ name, id }) => (
-              <DropdownListItem key={name} onClick={() => this.selectItem(name)}>
+            {options.map(({ name, id }) => (
+              <DropdownListItem
+                key={name}
+                onClick={() => this.selectItem(name, id)}
+              >
                 {name}
               </DropdownListItem>
             ))}
@@ -126,4 +184,10 @@ class Dropdown extends Component {
   }
 }
 
+Dropdown.propTypes = {
+  title: PropTypes.string,
+  // options: PropTypes.array.isRequierd,
+  onSetOptions: PropTypes.func.isRequired,
+  onSetSelected: PropTypes.func,
+};
 export default Dropdown;

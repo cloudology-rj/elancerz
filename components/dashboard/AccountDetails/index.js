@@ -1,5 +1,6 @@
-import React from 'react';
 import Image from 'next/image';
+
+import CreditCard from '../../../public/illustrations/card-payment.svg';
 
 import { 
     Wrapper,
@@ -15,7 +16,7 @@ const AccountDetails = ({ accountLabel, accountImageUrl, percent, acountAmount, 
 
   return (<>
         <Wrapper>
-            <Image className="accountDetailsImage" src={ accountImageUrl } height="200px" width="320px" />
+            <CreditCard />
             <Heading>{ accountLabel }</Heading>
             <BoxWrapper>
                 <BoxLeft>

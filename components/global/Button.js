@@ -8,6 +8,10 @@ const button = css`
   img {
     margin-right: 10px;
   }
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const ButtonPrimary = styled.button`
@@ -47,6 +51,13 @@ export const ButtonPrimary = styled.button`
 export const ButtonPrimaryIconOnly = styled(ButtonPrimary)`
   padding: 12px;
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const ButtonTertiary = styled.button`
@@ -54,7 +65,10 @@ export const ButtonTertiary = styled.button`
   font-size: ${(props) => props.theme.fontSizes.s4};
   font-family: 'Open Sans', sans-serif;
   font-weight: bold;
-  color: ${(props) => props.theme.colors.primaryBrand};
+  color: ${(props) =>
+    props.gray
+      ? props.theme.colors.subtleText
+      : props.theme.colors.primaryBrand};
   padding: 12px 24px;
   border-radius: 24px;
   line-height: 21.79px;
@@ -81,6 +95,10 @@ export const ButtonTertiary = styled.button`
     background: ${(props) => props.theme.colors.primaryBrand};
     color: #fff;
   }
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const ButtonOpacity = styled.button`
@@ -90,12 +108,15 @@ export const ButtonOpacity = styled.button`
   color: ${(props) => props.theme.colors.text};
   border-radius: 24px;
   box-shadow: 0px 6px 2px -4px rgba(14, 19, 44, 0.08),
-    inset 0px -1px 0px rgba(14, 19, 44, 0.24);
-  width: 40px;
-  height: 40px;
+    inset 0px -1px 0px rgba(14, 19, 44, 3%);
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const ButtonPill = styled.button`
@@ -110,6 +131,10 @@ export const ButtonPill = styled.button`
   justify-content: center;
   padding: 11px 16px;
   border-radius: 19px;
+
+  &:focus {
+    outline: none;
+  }
 
   ${(props) =>
     props.isActive === true &&
@@ -129,17 +154,22 @@ export const ButtonSecondary = styled.button.attrs((props) => ({
   font-size: ${(props) => props.theme.fontSizes.s4};
   font-family: 'Open sans', sans-serif;
   line-height: 22px;
+  text-transform: capitalize;
   font-weight: bold;
   color: ${(props) => props.theme.colors.primaryBrand};
 
   ${(props) =>
     props.navigate === 'right'
       ? css`
-  content: "hello";
-  `
+          content: 'hello';
+        `
       : css`
-  content: "hi"
-  `}
+          content: 'hi';
+        `}
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const ButtonTransparent = styled.button`
@@ -154,6 +184,10 @@ export const ButtonTransparent = styled.button`
   color: ${(props) => props.theme.colors.subtleText};
   outline: none;
   cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const ButtonDanger = styled.button`
@@ -168,6 +202,10 @@ export const ButtonDanger = styled.button`
   color: ${(props) => props.theme.colors.white};
   outline: none;
   cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const ButtonIcon = styled.button`
@@ -182,14 +220,59 @@ export const ButtonIcon = styled.button`
   justify-content: center;
   padding: 1em;
   border-radius: 50%;
-  width: 48px;
-  height: 48px;
-
+  box-shadow: 0px 6px 2px -4px rgba(14, 19, 44, 0.08),
+    inset 0px -1px 0px rgba(14, 19, 44, 3%);
   ${(props) =>
     props.isActive === true &&
     css`
       background: ${(props) => props.theme.colors.primaryBrand};
       color: #fff;
     `}
-    
+
+  &:focus {
+    outline: none;
+  }
 `;
+
+export const ButtonTab = styled.button`
+  ${button};
+  padding: 12px 24px;
+  border-radius: 24px;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: ${(props) => props.theme.fontSizes.s5};
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  @media ${(props) => props.theme.mediaQueries.laptop} {
+    font-size: ${(props) => props.theme.fontSizes.s4};
+  }
+
+  ${(props) => {
+    if (props.active) {
+      return `
+                background: ${props.theme.colors.primaryBrand};
+                color:#fff;
+                box-shadow: 0px 6px 2px -4px rgba(14, 19, 44, 0.08), inset 0px -1px 0px rgba(14, 19, 44, 0.24);
+            `;
+    } else {
+      return `
+                background: ${props.theme.colors.turqoise};
+                color: ${props.theme.colors.primaryBrand};
+            `;
+    }
+  }}
+`;
+export const ButtonFacebook = styled(ButtonPrimary)`
+display:flex;
+justify-content:center;
+align-items:center;
+
+&:hover{
+  background:#4266ad;
+}
+`

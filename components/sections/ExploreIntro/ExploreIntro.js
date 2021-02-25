@@ -1,26 +1,44 @@
-import React from 'react';
-import styled from 'styled-components';
+import { useContext } from 'react';
+import {useRouter} from 'next/router';
 
-import { Subtitle, HeaderTwo } from '@/components/global/Text';
+import { HeaderTwo } from '@/components/global/Text';
 import Container from '@/components/global/Container';
 import { ButtonPrimary } from '@/components/global/Button';
-
 import FreelancerCategory from '../FreelancerCategory/FreelancerCategory';
+import FreelancerSlider from '../FreelancerSlider/FreelancerSlider';
 
-import {ExploreContainer} from './ExploreIntroStyles';
+import {
+  ExploreContainer,
+  FreelanceCategoryContainer,
+} from './ExploreIntroStyles';
 
-
+import { IsMobileContext } from '../../../context/IsMobile';
 
 const ExploreIntro = (props) => {
+  const [isMobile] = useContext(IsMobileContext);
+const router = useRouter();
   return (
     <ExploreContainer>
       <Container>
-        <HeaderTwo>Explore</HeaderTwo>
-
-        <FreelancerCategory title="Graphic Designers" />
-        <FreelancerCategory title="Marketing Specialist" />
-        <ButtonPrimary align='center' >More Categories</ButtonPrimary>
+        <HeaderTwo>Categories</HeaderTwo>
       </Container>
+
+      <FreelanceCategoryContainer>
+        {isMobile ? (
+          <>
+            <FreelancerCategory title="Graphic Designers" />
+            <FreelancerCategory title="Marketing Specialist" />
+          </>
+        ) : (
+          <>
+            <FreelancerSlider title="Graphic Designers" />
+            <FreelancerSlider title="Marketing Specialist" />
+          </>
+        )}
+
+        <br />
+        <ButtonPrimary align="center" onClick={() => router.push('/explore')}>More Categories</ButtonPrimary>
+      </FreelanceCategoryContainer>
     </ExploreContainer>
   );
 };

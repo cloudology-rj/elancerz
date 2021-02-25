@@ -1,50 +1,59 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ChevronDown } from "react-feather"
 
-import { 
-    TopOptionWrapper,  
-    Tab,
-    Radio,
-    BoxLeft,
-    InputGroup,
-    RadioCircle,
-    IconWrapper
+import {
+  TopOptionWrapper,
+  Tab,
+  Radio,
+  BoxLeft,
+  InputGroup,
+  RadioCircle,
+  IconWrapper
 } from './TopOptionStyles'
 
+import Dropdown from '@/components/global/Dropdown';
+
 const SELECTED = {
-    ACTIVE: 'active',
-    COMPLETED: 'completed'
-}
+  ACTIVE: true,
+  COMPLETED: false,
+};
 
 
-const TopOptions = ({ setIsActive }) => {
-    const [selected, setSelected] = useState(SELECTED.ACTIVE)
- 
+const options = [
+  {
+    id: 1,
+    name: 'Recently updated'
+  },
+  {
+    id: 2,
+    name: 'Dollar Amount'
+  }
+]
+
+
+const TopOptions = ({ status, setIsActive }) => {
+
+
   return (
-        <TopOptionWrapper>
-          <BoxLeft>
-              <InputGroup>
-                <input type="text" id="options" name="options" placeholder="Recently updated"/>
-                <IconWrapper><ChevronDown color="#8C91A1"/></IconWrapper>
-              </InputGroup>
-          </BoxLeft>
-          <Tab>
-                <Radio onClick={() => {
-                    setSelected(SELECTED.ACTIVE)
-                    setIsActive(true)
-                }}>
-                   <RadioCircle  active={selected === SELECTED.ACTIVE ? true : false}  />
+    <TopOptionWrapper>
+      <BoxLeft>
+        <Dropdown title={"Recently updated"} options={options} onSetOptions={() => { }} onSetSelected={() => { }} />
+      </BoxLeft>
+      <Tab>
+        <Radio onClick={() => {
+          setIsActive(true);
+        }}>
+          <RadioCircle active={status ? true : false} />
                    Active
                 </Radio>
-                <Radio onClick={() => {
-                    setSelected(SELECTED.COMPLETED)
-                    setIsActive(false)
-                }}>
-                    <RadioCircle  active={selected === SELECTED.COMPLETED ? true : false}/>
+        <Radio onClick={() => {
+          setIsActive(false);
+        }}>
+          <RadioCircle active={!status ? true : false} />
                     Completed
                 </Radio>
-          </Tab>
-        </TopOptionWrapper>
+      </Tab>
+    </TopOptionWrapper>
   )
 };
 

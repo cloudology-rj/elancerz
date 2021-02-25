@@ -1,22 +1,54 @@
-import EditProfile from 'components/profile/editProfile/EditProfile';
+import styled from 'styled-components';
 import Layout from '../../components/Base/Layout/Layout';
+import EditProfile from 'components/profile/editProfile/EditProfile';
+import { HeaderTwo } from '@/components/global/Text';
 
-// import { useAuthState } from 'react-firebase-hooks/auth';
-// import { auth } from '../firebase/firebase';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
-const MyProfile = (props) => {
-    // const [user] = useAuthState(auth);
-    // const router = useRouter();
+import { useQuery } from 'react-query';
+import { fetchProfile } from '../../api/queries'
+import WithLoadingAndError from '../../HOC/WithLoadingAndError';
 
-    // if (user) {
-    //   router.push('/dashboard');
-    // }
-    return (
-        <Layout>         
-            <EditProfile />
-        </Layout>
+import { useAuth } from '../../context/AuthProvider';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
+
+const ProfileWithLoading = WithLoadingAndError(EditProfile);
+
+
+const MyProfile = () => {
+
+    const [token, setToken] = useLocalStorage('elancerztoken', null);
+
+    const { isLoading, error, data: profileData } = useQuery(
+        'EditprofileData', async () => await fetchProfile(token)
     );
+
+    if (error) {
+
+        return (
+            <Layout>
+                <NotFound>
+                    <HeaderTwo>
+                        Sorry, something went wrong with your request
+                    </HeaderTwo>
+                </NotFound>
+            </Layout>
+        )
+
+    }
+
+    return <Layout><ProfileWithLoading isLoading={isLoading} user={profileData} token={token} /></Layout>
+
 };
 
-
 export default MyProfile;
+
+export const NotFound = styled.div`
+  width: 100%;
+  height: 50vh;
+  display: grid;
+  align-items:center;
+  justify-content:center;
+  place-items: center;
+`;

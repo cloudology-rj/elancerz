@@ -14,7 +14,7 @@ export const CardImage = styled.img`
 `;
 
 export const FlexItems = styled.div`
-  ${mixins.flexAligned}
+  ${mixins.flex}
 
   margin:7px 0;
   justify-content: center;

@@ -1,19 +1,17 @@
-import React from 'react'
-import styled from 'styled-components';
-
-import Container from '@/components/global/Container';
+import MyServices from 'components/services/index';
 import Layout from '../../components/Base/Layout/Layout';
-import MyServices from 'components/services';
+import Container from '../../components/global/Container';
+import { useAuth } from "../../context/AuthProvider";
+const MyProfile = () => {
 
-const Services = props => {
-    return (
-        <Layout>
-            <Container>
-                <MyServices />
-            </Container>
-        </Layout>
-    )
+    // const { user } = useAuth()
+    // if (user == null) {
+    //     return null
+    // } else {
+    return <Layout><Container><MyServices /></Container></Layout>
+    // }
+
 }
 
+export default MyProfile;
 
-export default Services

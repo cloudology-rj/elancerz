@@ -1,42 +1,61 @@
 import Image from 'next/image';
 import Router from 'next/router';
+import axios from 'axios';
+import apiCall from '../../../helpers/fetch';
 
 import { Formik, Form } from 'formik';
-import { useState } from 'react';
-import { signInWithGoogle, auth } from '../../../firebase/firebase';
+
+import { useAuth } from '../../../context/AuthProvider';
 
 import {
   HeaderThree,
-  Bold,
-  PreTitle,
   HighlightColor,
   Body,
   ErrorMessage,
   Divider,
 } from '@/components/global/Text';
-import { ButtonPrimary, ButtonTertiary } from '@/components/global/Button';
+import {
+  ButtonPrimary,
+  ButtonTertiary,
+  ButtonFacebook,
+} from '@/components/global/Button';
 import Input from '@/components/global/Input';
 import Checkbox from '@/components/global/Checkbox';
+
+import Facebook from '../../../public/icons/facebook-icon.svg';
+import Google from '../../../public/icons/google-icon.svg';
 
 import {
   FlexContainer,
   InputGroup,
   SigninForm,
   SigninContainer,
+  ButtonForgotPassword,
 } from './SigninStyles';
-
+import { BodyLight } from '../AccountStyles';
+import { Flex } from '../../../styles/reusableStyles';
 const SignIn = ({ isModal, onSwitch, onPasswordReset }) => {
+  const { setIsLogin, setToken, isLogin, signInWithGoogle } = useAuth();
+
+  if (isLogin) {
+    Router.push('/dashboard');
+  }
+
   return (
     <SigninContainer>
       <HeaderThree>Log in to your account</HeaderThree>
       <br />
-      <ButtonPrimary fullWidth>
-        <Image src="/icons/facebook-icon.svg" height="22px" width="22px" />
-        Continue with Facebook
-      </ButtonPrimary>
+      <ButtonFacebook fullWidth>
+        <Flex direction="row">
+          <Facebook />
+          Continue with Facebook
+        </Flex>
+      </ButtonFacebook>
       <ButtonTertiary fullWidth isCenter onClick={() => signInWithGoogle()}>
-        <Image src="/icons/google-icon.svg" height="22px" width="22px" />
-        Continue with google
+        <Flex gap="7px" direction="row">
+          <Google />
+          Continue with google
+        </Flex>
       </ButtonTertiary>
       <Divider>or</Divider>
 
@@ -46,20 +65,25 @@ const SignIn = ({ isModal, onSwitch, onPasswordReset }) => {
           password: '',
         }}
         onSubmit={async (values, helpers) => {
+          helpers.setStatus();
           const { email, password } = values;
-          auth
-            .signInWithEmailAndPassword(email, password)
-            .then(() => {
-              console.log('running');
-              helpers.setStatus({ success: 'Email sent !' });
-              setTimeout(() => Router.push('/dashboard'), 5000);
-              helpers.resetForm({ values: '' });
-              //
+
+          const data = {
+            email,
+            password,
+          };
+
+          apiCall('/user/login', 'POST', '', data)
+            .then((res) => {
+              helpers.setStatus({ success: 'signed in' });
+              setIsLogin(true);
+
+              setToken(res.access_token);
+              Router.push('/dashboard');
             })
             .catch((err) => {
-              helpers.setStatus({
-                error: 'Wrong Username or password, please try again',
-              });
+              console.log(err.response);
+              helpers.setStatus({ error: 'User does not exist' });
             });
         }}
       >
@@ -86,6 +110,14 @@ const SignIn = ({ isModal, onSwitch, onPasswordReset }) => {
               placeholder="Enter your password"
             />
 
+            {errors && errors.username && (
+              <ErrorMessage>{errors.username}</ErrorMessage>
+            )}
+
+            {errors && errors.password && (
+              <ErrorMessage>{errors.password}</ErrorMessage>
+            )}
+
             {status && status.error && (
               <ErrorMessage>{status.error}</ErrorMessage>
             )}
@@ -100,22 +132,22 @@ const SignIn = ({ isModal, onSwitch, onPasswordReset }) => {
         <InputGroup>
           <Checkbox />
 
-          <Body>Remember me</Body>
+          <BodyLight>Remember me</BodyLight>
         </InputGroup>
 
         {isModal ? (
-          <ButtonTertiary onClick={() => onPasswordReset()}>
+          <ButtonForgotPassword onClick={() => onPasswordReset()}>
             Forgot Password
-          </ButtonTertiary>
+          </ButtonForgotPassword>
         ) : (
-          <ButtonTertiary
+          <ButtonForgotPassword
             onClick={() => Router.push('/account/forgot-password')}
           >
             Forgot password
-          </ButtonTertiary>
+          </ButtonForgotPassword>
         )}
       </FlexContainer>
-      <PreTitle>
+      <BodyLight>
         Not yet a member?{' '}
         {isModal ? (
           <HighlightColor onClick={() => onSwitch()}>sign up</HighlightColor>
@@ -124,7 +156,7 @@ const SignIn = ({ isModal, onSwitch, onPasswordReset }) => {
             sign up
           </HighlightColor>
         )}
-      </PreTitle>
+      </BodyLight>
     </SigninContainer>
   );
 };

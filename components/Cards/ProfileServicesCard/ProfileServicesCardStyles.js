@@ -25,11 +25,10 @@ export const CardContainer = styled.div`
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.04),
     0px 8px 16px -8px rgba(14, 19, 44, 0.16);
   width:240px;
-  height:270px;
   min-width:240px;
   min-height:270px;
 `;
-export const CardImage = styled(Image)`
+export const CardImage = styled.img`
   border-radius: 4px 4px 0 0;
   cursor: grab;
 `;

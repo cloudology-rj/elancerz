@@ -5,7 +5,11 @@ import ForgotPassword from './ForgotPassword/ForgotPassword';
 import {AccoutContainer} from './AccountStyles';
 
 
+
+
 const Account = ({ section }) => {
+
+
   return (
     <AccoutContainer>
       {section == 'sign-up' && <Signup />}

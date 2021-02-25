@@ -9,9 +9,10 @@ color:#4CD7D0;
 
 }
 
-.rec.rec-arrow:hover{
+.rec.rec-arrow:hover,
+.rec.rec-arrow:focus{
     background:#4CD7D0 !important;
-    box-shadow:none;
+    box-shadow:none !important;
 }
 
 .rec.rec-arrow:disabled {
@@ -30,3 +31,37 @@ color:#4CD7D0;
     background:#4CD7D0;
     box-shadow:none;
 }
+
+
+
+.rec .rec-carousel-item:last-child > div {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+
+.rec .rec-slider-container{
+    margin:0;
+}
+
+
+.rec-carousel {
+    position: relative;
+    width:100%;
+}
+.rec-slider-container {
+    margin: 0;
+}
+.rec-arrow {
+    position: absolute;
+    z-index: 999;
+}
+.rec-arrow-right{
+    right: 50px;
+  }
+  .rec-arrow-left{
+    left: 50px;
+  }

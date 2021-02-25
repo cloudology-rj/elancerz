@@ -13,7 +13,7 @@ const Category = (props) => {
   return (
     <ExploreContainer>
       <Layout>
-        <Container>
+      <Container>
           <ExploreFreelancers />
         </Container>
       </Layout>

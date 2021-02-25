@@ -8,7 +8,12 @@ import MultiStep from '@/components/global/MultiStep';
 
 import schemas from './schema';
 
-import { FormGroup, ButtonStepper, AccoutContainer } from '../AccountStyles';
+import {
+  FormGroup,
+  ButtonStepper,
+  AccoutContainer,
+  BodyLight,
+} from '../AccountStyles';
 
 const FormikStep = (
   currentStep,
@@ -22,10 +27,10 @@ const FormikStep = (
     case 0:
       return (
         <FormGroup>
-          <Body>
+          <BodyLight>
             Please enter your email address and we’ll send you a link to reset
             your password.
-          </Body>
+          </BodyLight>
 
           <Input
             errors={errors.email}
@@ -120,15 +125,18 @@ const ForgotPassword = ({ onSwitch, isModal }) => {
       />
 
       {isModal ? (
-        <ButtonTertiary onClick={() => onSwitch()}>
+        <ButtonTertiary isCenter fullWidth onClick={() => onSwitch()}>
           Back to login
         </ButtonTertiary>
       ) : (
-        <ButtonTertiary onClick={() => router.push('/account/sign-in')}>
+        <ButtonTertiary
+          isCenter
+          fullWidth
+          onClick={() => router.push('/account/sign-in')}
+        >
           Back to login
         </ButtonTertiary>
       )}
-
     </AccoutContainer>
   );
 };

@@ -32,12 +32,13 @@ export const HeaderContainer = styled.header`
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
+  background-size: 613px 949px;
+  background-position: top;
 
   @media ${(props) => props.theme.mediaQueries.tablet} {
-    background-position: right center;
+    background-size: cover;
+    background-position: center center;
   }
-
-  
 `;
 
 export const NavbarButton = styled.div`
@@ -58,8 +59,8 @@ export const ButtonContainer = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
 
-   button:first-child{
-      margin: 28px 0;
+  button:first-child {
+    margin: 28px 0;
   }
 
   @media ${(props) => props.theme.mediaQueries.laptop} {
@@ -69,4 +70,8 @@ export const ButtonContainer = styled.div`
 
 export const ButtonSecondaryStyle = styled(ButtonSecondary)`
   padding-left: 17px;
+`;
+
+export const HeaderForm = styled.form`
+  width: 100%;
 `;

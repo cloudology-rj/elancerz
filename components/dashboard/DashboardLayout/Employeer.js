@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 
 import TopService from 'components/dashboard/TopService';
@@ -16,6 +15,9 @@ import useWorkApprovalPending from 'components/dashboard/useEmployeer/useWorkApp
 
 
 const Employeer = () => {
+
+ console.log('EMPLOYER RUNNING');
+
     const { title, link, buttonText } = useTopServiceEmployeer()
     const { label, list } = useSpending()
     const { approvalTitle, approvalLink,  approvalButtonText, people, shortText } = useWorkApprovalPending()

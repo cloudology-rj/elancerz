@@ -94,7 +94,8 @@ export const SmallText = styled.h6`
 `;
 
 export const HighlightColor = styled.span`
-  color: ${(props) => props.theme.colors.primaryBrand};
+  color: ${(props) =>
+    props.color ? props.color : props.theme.colors.primaryBrand};
   cursor: pointer;
 `;
 
@@ -103,6 +104,8 @@ export const Divider = styled(Bold)`
   align-items: center;
   text-align: center;
   width: 100%;
+  text-transform: uppercase;
+  color: ${(props) => props.theme.colors.subtleText};
 
   &::before,
   &::after {

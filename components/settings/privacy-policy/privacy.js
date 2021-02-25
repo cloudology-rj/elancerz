@@ -1,4 +1,3 @@
-import React from 'react'
 import { Header } from '../reusables/Header'
 import {StyledPrivacy} from './PrivacyStyles'
 import {StyledTerms, StyledPretitle, StyledBold, StyledBody} from '../terms-of-service/TermsStyles'

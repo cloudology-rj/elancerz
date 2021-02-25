@@ -10,7 +10,7 @@ const Footer = (props) => {
     <FooterContainer>
       <FooterFlex>
         <Image
-          src="/illustrations/footer-logo.svg"
+          src="/images/LogoWhite.svg"
           width="53px"
           height="37px"
         />

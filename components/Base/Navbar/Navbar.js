@@ -1,44 +1,118 @@
-import { useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Image from 'next/image';
 
-import { LogoSmall } from '@/components/global/Logo';
+import { useRouter } from 'next/router';
 
+import { useAuth } from '../../../context/AuthProvider';
+
+import { LogoSmall } from '@/components/global/Logo';
+import Popover from '@/components/global/popover';
 import { ButtonPrimary } from '@/components/global/Button';
 import Container from '@/components/global/Container';
 import SidebarNav from '../SidebarNav/SidebarNav';
 
+import { IsMobileContext } from '../../../context/IsMobile';
+
+import { useLocalStorage } from '../../../hooks/useLocalStorage';
+
+import Hamburger from '../../../public/icons/menu.svg';
+import Chat from '../../../public/icons/chat.svg';
+import Notification from '../../../public/icons/Bell.svg';
+
 import {
   HeaderContainer,
-  HamburgerMenu,
-  FlexContainer,
   NavbarInput,
   NavbarRight,
+  Badge,
+  SearchContent,
+  NotificationContainer,
 } from './NavbarStyles';
 
-const Navbar = (props) => {
+import { Flex } from '../../../styles/reusableStyles';
+
+const Navbar = ({ fixed }) => {
   const [toggle, setToggle] = useState(false);
+  const [keyword, setKeyword] = useState(null);
+  const [popup, setPopup] = useState(false);
+
+  const [searchQueries, setSearchQueries] = useLocalStorage('histories', [
+    'Logo Design',
+    'Web development',
+  ]);
+
+  const router = useRouter();
+  const { query } = router.query;
+
+  const [isMobile] = useContext(IsMobileContext);
+  const { isLogin } = useAuth();
+
+  useEffect(() => {
+    window.localStorage.setItem('squares', JSON.stringify(searchQueries));
+  }, [searchQueries]);
+
+  useEffect(() => {
+    setKeyword(null);
+  }, [query]);
+
+  const handleEnter = (e) => {
+    if (e.key === 'Enter') {
+      setKeyword('');
+      setSearchQueries([...searchQueries, keyword]);
+      router.push(`/search/${keyword}`);
+    }
+  };
 
   return (
     <>
       <Container>
-        <HeaderContainer>
-          <FlexContainer>
-            <HamburgerMenu onClick={() => setToggle(true)}>
-              <Image src="/icons/menu.svg" width="24px" height="24px" />
-            </HamburgerMenu>
+        <HeaderContainer fixed={fixed}>
+          <Flex gap="46px">
+            <Hamburger onClick={() => setToggle(!toggle)} />
             <LogoSmall />
-          </FlexContainer>
+          </Flex>
 
           <NavbarRight>
-            <NavbarInput placeholder="Enter a search" />
-            <Image src="/icons/Bell.svg" width="25px" height="25px" />
-            <Image src="/icons/chat.svg" width="25px" height="25px" />
+            <SearchContent>
+              <NavbarInput
+                value={keyword}
+                placeholder="Enter a search"
+                onClick={() => setPopup(true)}
+                onChange={(e) => setKeyword(e.target.value)}
+                onKeyPress={handleEnter}
+              />
 
-            {/* if not logged in <ButtonPrimary>login</ButtonPrimary> */}
+              {popup && (
+                <Popover
+                  title="Search History"
+                  list={searchQueries}
+                  onSetPopup={setPopup}
+                  popup={popup}
+                />
+              )}
+            </SearchContent>
+            {isLogin ? (
+              <>
+                <NotificationContainer>
+                  <Notification />
+                  <Badge>5</Badge>
+                </NotificationContainer>
+
+                <NotificationContainer>
+                  <Chat />
+                  <Badge>5</Badge>
+                </NotificationContainer>
+              </>
+            ) : (
+              <ButtonPrimary onClick={() => router.push('/account/sign-in')}>
+                login
+              </ButtonPrimary>
+            )}
+
+            {/* if not logged in  */}
           </NavbarRight>
         </HeaderContainer>
       </Container>
-      {toggle && <SidebarNav toggle={toggle} onToggle={setToggle} />}
+      <SidebarNav toggle={toggle} onToggle={setToggle} />
     </>
   );
 };

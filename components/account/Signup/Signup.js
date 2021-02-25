@@ -1,35 +1,48 @@
 import Image from 'next/image';
 import Router from 'next/router';
-import React, { useState } from 'react';
 
-import { auth } from '../../../firebase/firebase';
+import apiCall from '../../../helpers/fetch';
 
-import {
-  signInWithGoogle,
-  signInWithFacebook,
-} from '../../../firebase/firebase';
+import { useState } from 'react';
+
+import { useAuth } from '../../../context/AuthProvider';
+
+import { signInWithFacebook } from '../../../firebase/firebase';
 
 import signupSchema from './signupSchema';
 
 import MultiStep from '@/components/global/MultiStep';
+
+import Facebook from '../../../public/icons/facebook-icon.svg';
+import Google from '../../../public/icons/google-icon.svg';
+
+import { HeaderThree, ErrorMessage, Divider } from '@/components/global/Text';
 import {
-  HeaderThree,
-  Bold,
-  PreTitle,
-  HighlightColor,
-  ErrorMessage,
-  Divider,
-} from '@/components/global/Text';
-import { ButtonPrimary, ButtonTertiary } from '@/components/global/Button';
+  ButtonPrimary,
+  ButtonTertiary,
+  ButtonFacebook,
+} from '@/components/global/Button';
 import Input from '@/components/global/Input';
 
-import { FormGroup, SignupContainer, ButtonStepper } from './SignupStyles';
+import {
+  FormGroup,
+  SignupContainer,
+  ButtonStepper,
+  BottomText,
+} from './SignupStyles';
+import { Flex } from '../../../styles/reusableStyles';
 
-
+import { BodyLight } from '../AccountStyles';
 
 const Signup = ({ isModal, onSwitch }) => {
   const [signupSuccess, setSignupSuccess] = useState(false);
   const [step, setStep] = useState(0);
+
+  const { setIsLogin, isLogin, signInWithGoogle } = useAuth();
+
+  if (isLogin) {
+    Router.push('/dashboard');
+  }
 
   return (
     <SignupContainer>
@@ -37,6 +50,7 @@ const Signup = ({ isModal, onSwitch }) => {
       <br />
 
       <MultiStep
+        signInWithGoogle={signInWithGoogle}
         renderItems={FormikStep}
         currentStep={step}
         onSetStep={setStep}
@@ -51,38 +65,60 @@ const Signup = ({ isModal, onSwitch }) => {
           // validationSchema={testSchema2}
 
           if (step === 1) {
+            helpers.setStatus();
+            setSignupSuccess(true);
             const { email, username, password } = values;
 
-            auth
-              .createUserWithEmailAndPassword(email, password)
-              .then(() => {
-                alert('Account created');
-                Router.push('/dashboard');
+            apiCall('/user/register', 'POST', '', {
+              email,
+              username,
+              password,
+            })
+              .then((res) => {
+                helpers.setStatus({ success: 'Email sent !' });
+                console.log('DONE SIGNING UP');
+                // window.localStorage.setItem('token', JSON.stringify(res.data));
+                console.log(res);
+                // auth
+                //   .createUserWithEmailAndPassword(email, password)
+                //   .then(() => {
+                //     alert('Account created');
+                //     Router.push('/account/sign-in');
+                //   })
+                //   .catch((err) => {
+                //     alert(err);
+                //   });
               })
-              .catch((err) => {
-                alert(err);
-                helpers.setStatus();
+              .catch(function (error) {
+                helpers.setStatus({
+                  username: error.response?.data?.errors?.username,
+                  password: error.response?.data?.errors?.passwordConfirmation,
+                });
               });
           } else {
             setStep(step + 1);
           }
         }}
       />
-      <PreTitle>
+      <BodyLight>
         By joining, you agree to our Terms of Service, as well as to receive
         occasional emails from us.
-      </PreTitle>
+      </BodyLight>
 
-      <PreTitle>
-        Already a member?{' '}
-        {isModal ? (
-          <HighlightColor onClick={() => onSwitch()}>Login</HighlightColor>
-        ) : (
-          <HighlightColor onClick={() => Router.push('/account/sign-in')}>
-            Login
-          </HighlightColor>
-        )}
-      </PreTitle>
+      <BodyLight>
+        <Flex gap="5px">
+          Already a member?
+          {isModal ? (
+            <BottomText onClick={() => onSwitch()}>Login</BottomText>
+          ) : (
+            <BottomText onClick={() => Router.push('/account/sign-in')}>
+              Login
+            </BottomText>
+          )}
+        </Flex>
+      </BodyLight>
+
+      <br />
     </SignupContainer>
   );
 };
@@ -94,20 +130,26 @@ const FormikStep = (
   errors,
   touched,
   handleChange,
-  handleBlur
+  handleBlur,
+  status = 'test',
+  signInWithGoogle
 ) => {
   switch (currentStep) {
     case 0:
       return (
         <FormGroup>
-          <ButtonPrimary fullWidth onClick={signInWithFacebook}>
-            <Image src="/icons/facebook-icon.svg" height="22px" width="22px" />
-            Continue with Facebook
-          </ButtonPrimary>
+          <ButtonFacebook fullWidth onClick={signInWithFacebook}>
+            <Flex direction="row">
+              <Facebook />
+              Continue with Facebook
+            </Flex>
+          </ButtonFacebook>
 
           <ButtonTertiary isCenter fullWidth onClick={signInWithGoogle}>
-            <Image src="/icons/google-icon.svg" height="22px" width="22px" />
-            Continue with google
+            <Flex gap="7px" direction="row">
+              <Google />
+              Continue with google
+            </Flex>
           </ButtonTertiary>
 
           <Divider>or</Divider>
@@ -125,8 +167,8 @@ const FormikStep = (
             <ErrorMessage>{errors.email}</ErrorMessage>
           )}
 
-{
-           // handles switching the steps
+          {
+            // handles switching the steps
             <ButtonStepper fullWidth type="submit">
               Continue
             </ButtonStepper>
@@ -137,6 +179,8 @@ const FormikStep = (
       return (
         <FormGroup>
           <Input
+            success={status && status.success}
+            error={status && status.error}
             onBlur={handleBlur}
             type="text"
             name="username"
@@ -148,6 +192,7 @@ const FormikStep = (
           )}
 
           <Input
+            success={status && status.success}
             onBlur={handleBlur}
             type="password"
             name="password"
@@ -158,10 +203,12 @@ const FormikStep = (
             <ErrorMessage>{errors.password}</ErrorMessage>
           )}
 
-{
-           // handles switching the steps
+          {status.username && <ErrorMessage>{status.username}</ErrorMessage>}
+
+          {
+            // handles switching the steps
             <ButtonStepper fullWidth type="submit">
-              Sign up
+              sign up
             </ButtonStepper>
           }
         </FormGroup>

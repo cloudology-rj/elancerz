@@ -1,7 +1,8 @@
-import React from 'react';
-
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
+
+
+import SearchIcon from '../../public/icons/search.svg';
 
 const InputStyle = styled.input`
   position: relative;
@@ -62,10 +63,21 @@ const IconValidation = styled.img`
   top: 13px;
   bottom: 18px;
 `;
-const Input = ({ error, success, ...props }) => {
+
+const Search = styled(SearchIcon)`
+  position: absolute;
+  right: 18px;
+  top: 13px;
+  bottom: 18px;
+  width:24px;
+  height:24px;
+
+`;
+
+const Input = ({ error, success, search, name, id, reference, ...props }) => {
   return (
     <Inputcontainer>
-      <InputStyle success={success} error={error} {...props} />
+      <InputStyle success={success} error={error} {...props} name={name} id={id} ref={reference} />
 
       {error && (
         <IconValidation src="/icons/error.svg" alt="error message icon" />
@@ -76,6 +88,9 @@ const Input = ({ error, success, ...props }) => {
           src="/icons/success-check.svg"
           alt="error message icon"
         />
+      )}
+      {search && (
+        <Search />
       )}
     </Inputcontainer>
   );

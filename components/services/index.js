@@ -1,5 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import styled from 'styled-components';
+
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { deleteService, getUserServices } from '../../api/queries';
+
+import { useLocalStorage } from '../../hooks/useLocalStorage';
+
 import Image from 'next/image';
 import { HeaderThree, HeaderTwo, Bold, PreTitle } from '@/components/global/Text';
 
@@ -29,90 +36,108 @@ const options = [
   }
 ];
 
-const services = [
-  {
-    id: 1,
-    name: 'Logo Design',
-    subtitle:'GRAPHIC DESIGN',
-    fee:'50',
-    desc:'Rhoncus egestas aliquet in diam eget proin velit. Nulla amet, dolor ultrices pellentesque tristique pellentesque bibendum at sollicitudin. Duis dui, in sem ac, condimentum. Phasellus curabitur mattis egestas tortor. Sit scelerisque dignissim ut dui gravida nunc. Nibh donec duis laoreet at. Tellus dui egestas at pellentesque. Scelerisque lacinia pulvinar in vehicula eget mi eu duis quis. Commodo orci condimentum ante pulvinar venenatis facilisis fermentum dictum viverra. Lectus id semper viverra elit phasellus turpis at.'
-  },
-  {
-    id: 2,
-    name: 'Landing Page Design',
-    subtitle:'UI/UX DESIGN',
-    fee:'250',
-    desc:'Lectus venenatis libero massa pharetra, integer lectus amet ridiculus. Nulla euismod pretium et sed suspendisse in feugiat. Dui in lectus sollicitudin dictumst senectus vitae gravida. Lorem ut eget malesuada odio velit, varius odio. Ac gravida tortor nunc bibendum vestibulum. Volutpat nibh massa, urna aliquet velit tellus quisque non. Aliquet dolor, viverra ac, morbi.Arcu ultricies a penatibus pellentesque ac eget a diam. Ipsum pellentesque aliquet urna sem. Nullam velit dolor diam varius felis neque.'
-  },
-  {
-    id: 3,
-    name: 'Mockups and Prototypes',
-    subtitle:'UI/UX DESIGN',
-    fee:'400',
-    desc:'Diam metus sed lectus tristique nullam pellentesque sit. Habitasse ornare platea dolor praesent. Tincidunt ut aliquet eget pulvinar egestas. Purus augue volutpat accumsan interdum eu, nisi, integer vel urna. Lacinia erat eu a libero egestas viverra sed. Id sed mauris, quam sit consequat sit sit. Erat est pretium parturient malesuada neque nisl elementum urna, sapien. A, sem a nisi, sed nisl eget mauris augue vitae. Sed a lectus.'
-  }
-];
 
+const Services = () => {
 
-const Services = (props) => {
+  const [token, setToken] = useLocalStorage('elancerztoken', null);
+
+  const { isLoading, error, data: srv } = useQuery(
+    'servicesQuery', () => getUserServices(token)
+  );
+
+  if (error)
+    return (
+      <NotFound>
+        <HeaderTwo>Sorry, something went wrong with your request</HeaderTwo>
+      </NotFound>
+    );
+
 
   const router = useRouter();
+  const [selectedService, setSelectedService] = useState(0)
+  const queryClient = useQueryClient()
+  const { mutateAsync, isLoading: isMutating } = useMutation(deleteService)
+
+
+  const removeService = async (id) => {
+    await mutateAsync({ token, id })
+    queryClient.invalidateQueries('servicesQuery')
+    setModalActive(!modalActive)
+
+  }
 
   const newService = (e) => {
-    router.push('/services/new')
+    router.push("/services/new/")
   }
 
-  const editService = (e) => {
-    router.push('/services/edit')
+  const editService = (id) => {
+    router.push(`/services/edit/${id}`)
   }
-
-
 
 
   // Modal
 
   const [modalActive, setModalActive] = useState(false)
-  const toggleModal = () => setModalActive(!modalActive)
+
+  const toggleModal = (id) => {
+    setSelectedService(id)
+    setModalActive(!modalActive)
+  }
   const ModalContent = () => {
-    return (
-      <>
-        <HeaderThree className="card-header">Delete service</HeaderThree>
-        <br />
-        <FlexLine/>
-        <ModalContainer>
-          <Paragraphs>Are you sure you want to delete </Paragraphs>
-          <Bold>Logo Design ($50)</Bold>
-          <Paragraphs>?</Paragraphs>
-        </ModalContainer>
-        <ButtonDanger>DELETE</ButtonDanger>
-        <ButtonTransparent onClick={toggleModal}>CANCEL</ButtonTransparent>
-      </>
-    )
+
+
+    const service = srv?.find(x => x.id === selectedService);
+    // const service = services.find(x => x.id === selectedService);
+    try {
+
+
+      return (
+        <>
+          <HeaderThree className="card-header">Delete service</HeaderThree>
+          <br />
+          <FlexLine />
+          <ModalContainer>
+            <Paragraphs>Are you sure you want to delete </Paragraphs>
+            <Bold>&nbsp;{service?.name} (${service?.price})&nbsp;</Bold>
+            <Paragraphs>?</Paragraphs>
+          </ModalContainer>
+          <ButtonDanger onClick={() => removeService(service?.id)}>DELETE</ButtonDanger>
+          <ButtonTransparent onClick={() => toggleModal(0)}>CANCEL</ButtonTransparent>
+        </>
+      );
+
+
+    } catch (error) {
+
+      return <></>
+    }
+
   }
 
   return (
     <GridContainer>
       {/* title and add button */}
       <FlexSpaceBetween>
-        <HeaderThree>Services(3)</HeaderThree>
+        <HeaderThree>Services({srv?.length})</HeaderThree>
         <ButtonPrimary onClick={newService}>
           <Image src={'/icons/add-white.svg'} width={12.83} height={12.83} />
-          &nbsp;
-          ADD
-        </ButtonPrimary>
+        &nbsp;
+        ADD
+      </ButtonPrimary>
       </FlexSpaceBetween>
-      <Dropdown title={'Recently updated'} resetThenSet={() => { }} list={options} />
-      {services.map((data, index) => (
+      <Dropdown title={'Recently updated'} onSetOptions={() => { }} onSetSelected={() => { }} options={options} />
+
+      {srv?.map((data, index) => (
         <ServicesCard
-        key={index}
-        title={data.name}
-        subtitle={data.subtitle}
-        fee={'$ '+data.fee}
-        desc={data.desc}
-        del={toggleModal}
-        edit={editService} />
+          key={index}
+          title={data.name}
+          subtitle={'Category Name'}
+          fee={'$ ' + data.price}
+          desc={data.description}
+          del={() => toggleModal(data.id)}
+          edit={() => editService(data.id)} />
       ))}
-      
+
 
       <Modal modalActive={modalActive} setModalActive={setModalActive} content={<ModalContent />} />
 
@@ -124,3 +149,13 @@ const Services = (props) => {
 
 
 export default Services;
+
+
+export const NotFound = styled.div`
+  width: 100%;
+  height: 50vh;
+  display: grid;
+  align-items:center;
+  justify-content:center;
+  place-items: center;
+`;

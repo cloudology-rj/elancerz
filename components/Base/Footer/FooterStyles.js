@@ -6,7 +6,6 @@ export const FooterContainer = styled.footer`
   text-align: center;
   padding: 60px 0;
   text-align: center;
-
 `;
 
 export const FooterFlex = styled.div`

@@ -1,4 +1,3 @@
-import React from 'react'
 import {StyledTerms, StyledPretitle, StyledBold, StyledBody} from './TermsStyles'
 import {Header} from '../reusables/Header'
 

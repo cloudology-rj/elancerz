@@ -4,8 +4,11 @@ export const TopOptionWrapper = styled.div`
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin-bottom:32px;
     width:100%;
+    margin-bottom: 1em;
+    gap: 1em;
+    flex-basis: 51%;
+    flex-wrap: wrap;
 `;
 
 export const Tab = styled.div`
@@ -48,7 +51,7 @@ export const RadioCircle = styled.div`
     }
 
     ${props => {
-        if(props.active) {
+        if (props.active) {
             return `
                 border:2px solid ${props.theme.colors.primaryBrand};
                 background:#fff;
@@ -68,7 +71,10 @@ export const RadioCircle = styled.div`
 
 
 export const BoxLeft = styled.div`
-    
+    width: 100%;
+    @media ${(props) => props.theme.mediaQueries.tablet} {
+        width: 50%;
+    }
 `;
 
 export const InputGroup = styled.div`

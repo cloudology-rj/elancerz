@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
 import { ButtonPrimary } from '@/components/global/Button';
@@ -31,10 +30,10 @@ it with condition to display a component
 
 */
 
-const MultiStep = ({ currentStep, onSetStep, renderItems, ...props }) => {
+const MultiStep = ({ signInWithGoogle,currentStep, onSetStep, renderItems, ...props }) => {
   return (
     <Formik {...props}>
-      {({ values, errors, touched, handleChange, handleBlur }) => (
+      {({ values, errors, touched, handleChange, handleBlur, status }) => (
         <FormContainer autoComplete="off">
           {
             // We pass the props that our form fields going to need
@@ -44,10 +43,11 @@ const MultiStep = ({ currentStep, onSetStep, renderItems, ...props }) => {
               errors,
               touched,
               handleChange,
-              handleBlur
+              handleBlur,
+              status,
+              signInWithGoogle
             )
           }
-        
         </FormContainer>
       )}
     </Formik>
@@ -60,5 +60,4 @@ MultiStep.propTypes = {
   currentStep: PropTypes.number.isRequired,
   onSetStep: PropTypes.func.isRequired,
   renderItems: PropTypes.func.isRequired,
-
 };

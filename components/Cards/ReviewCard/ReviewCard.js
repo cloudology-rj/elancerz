@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { PreTitle, Body, HeaderThree } from '@/components/global/Text';
 import Image from 'next/image';

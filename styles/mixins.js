@@ -1,6 +1,8 @@
 import { css } from 'styled-components';
 
- const Mixins = {
+
+
+const Mixins = {
   flexCenter: css`
     display: flex;
     justify-content: center;
@@ -10,13 +12,17 @@ import { css } from 'styled-components';
   flexBetween: css`
     display: flex;
     justify-content: space-between;
-    align-items:center;
+    align-items: center;
   `,
 
-  flexAligned: css`
+  flex: css`
     display: flex;
     align-items: center;
   `,
 };
 
 export default Mixins;
+
+
+
+

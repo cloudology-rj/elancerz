@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import styled from 'styled-components';
@@ -22,39 +22,70 @@ import {
   ProfileBannerButtons,
   ExitPublicView,
   FlexNav,
-  testData,
+  FlexBaseline,
+  FlexBaselineMobile
 } from './ProfileStyles';
 import Modal from '@/components/global/Modal';
-
 import ReviewCard from '../Cards/ReviewCard/ReviewCard';
 
-const HeroImage = styled.div`
-  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)),
-    url('/images/banner.png');
-  height: 480px;
-  width: 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: relative;
-  padding:2em;
-
-  
-  @media ${(props) => props.theme.mediaQueries.mobile} {
-    margin: 0 1.5em 9em 1.5em;
-  }
-  @media ${(props) => props.theme.mediaQueries.desktop} {
-    margin: 0 1.5em 12em 1.5em;
-  }
-  @media ${(props) => props.theme.mediaQueries.largeScreen} {
-    margin: 0 1.5em 12em 1.5em;
-  }
 
 
-`;
 
 
-const Profile = (props) => {
+
+
+
+const Profile = ({ ...props }) => {
+
+  // localStorage.setItem('rememberMe', rememberMe);
+  const [_bg, set_bg] = useState()
+  const defaultBG = '/images/banner.png'
+  const bg = localStorage.getItem('el-bg');
+
+
+
+
+  useEffect(() => {
+    if (bg == null) {
+      localStorage.setItem('el-bg', defaultBG)
+      set_bg(defaultBG);
+    } else {
+      set_bg(localStorage.getItem('el-bg'));
+    }
+  }, [])
+
+
+
+
+  const HeroImage = styled.div`
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)),
+      url("${_bg}");
+    height: 480px;
+    width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    padding:1.5em;
+
+
+    @media ${(props) => props.theme.mediaQueries.mobile} {
+      margin: 0 1.5em 9em 1.5em;
+    }
+    @media ${(props) => props.theme.mediaQueries.desktop} {
+      margin: 0 1.5em 12em 1.5em;
+    }
+    @media ${(props) => props.theme.mediaQueries.largeScreen} {
+      margin: 0 1.5em 12em 1.5em;
+    }
+    `;
+
+
+
+  // console.log(props.services);
+
+  // route
+  const router = useRouter();
   // publicview
   const [isPublic, setIsPublic] = useState(false);
   const toggle = () => setIsPublic(!isPublic);
@@ -62,38 +93,67 @@ const Profile = (props) => {
   // Modal
 
   const [modalActive, setModalActive] = useState(false)
-  const toggleModal = () => setModalActive(!modalActive)
+
+  const [selectedService, setSelectedService] = useState(0)
+
+  const toggleModal = (id) => {
+    setSelectedService(id)
+    setModalActive(!modalActive)
+  }
+
+
+  const joinedDate = new Date(props?.created_at)
+
+
   const ModalContent = () => {
-    return (
-      <>
-        <HeaderThree className="card-header">Service #1</HeaderThree>
-        <br />
-        <FlexLine/>
-        <br />
-        <Image
-          src='/images/samplemodalimg.png'
-          width="400px"
-          height="200px"
-        />
-        <br />
-        <Paragraphs>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consequat ultricies mattis duis id cursus mattis. Lacinia viverra enim egestas pulvinar sit pretium ut. Sed sed eu, ac nulla sed lorem vestibulum, lorem. Imperdiet sodales id nunc sit volutpat.</Paragraphs>
-        <br />
-        <FlexBetween>
-          <PreTitle>32 Services Completed</PreTitle>
-          <HeaderThree>$50</HeaderThree>
-        </FlexBetween>
-        <br />
-        <ButtonPrimary>GET A QOUTE</ButtonPrimary>
-      </>
-    );
+
+
+    const service = props?.services?.find(x => x.id === selectedService);
+    // const service = services.find(x => x.id === selectedService);
+    try {
+
+
+      return (
+        <>
+          <HeaderThree className="card-header">{service.name}</HeaderThree>
+          <br />
+          <FlexLine />
+          <br />
+          <img
+            src={'https://via.placeholder.com/1000x800.png?text=Service+Image'}
+            width="100%"
+            height="300px"
+          />
+          <br />
+          <Paragraphs>{service.description}</Paragraphs>
+          <br />
+          <FlexBetween>
+            <PreTitle>0 Services Completed</PreTitle>
+            <HeaderThree>{service.rate}</HeaderThree>
+          </FlexBetween>
+          <br />
+          <ButtonPrimary onClick={getaQuote}>GET A QOUTE</ButtonPrimary>
+        </>
+      );
+
+
+    } catch (error) {
+
+      return <></>
+    }
+
   };
 
-  // route
-  const router = useRouter();
+
+
+
   const editClick = (e) => {
-    router.push('/profile/edit');
+    router.push('/profile/edit/');
   };
 
+  const getaQuote = () => {
+    router.push('/messages/1')
+  }
 
   const prev = () => {
     const DivServ = document.getElementById('servicesScroll')
@@ -139,9 +199,11 @@ const Profile = (props) => {
       const x = e.pageX - slider.offsetLeft;
       const walk = (x - startX) * 1.6; //scroll-fast
       slider.scrollLeft = scrollLeft - walk;
-      
+
     });
   }
+
+
 
   return (
     <ProfileContainer>
@@ -168,31 +230,46 @@ const Profile = (props) => {
           )}
 
         <FlexCenter>
-          <ProfileCard />
+          <ProfileCard
+            img={props?.avatar == null || props?.avatar == "" ? 'https://via.placeholder.com/500x500.png?text=Profile+Image' : props?.avatar}
+            fullname={props?.first_name == null || props?.last_name == null || props?.first_name == "" || props?.last_name == "" ? 'First & Last Name' : props?.first_name + ' ' + props?.last_name}
+            title={props?.title}
+            username={props?.username}
+            star={0}
+            rating={0}
+            joined={joinedDate.toDateString()}
+          />
         </FlexCenter>
       </HeroImage>
 
       <BodyContainer>
         <HeaderThree>About</HeaderThree>
-        <Paragraphs>
-          At fermentum volutpat eget hac erat sed et nunc. Tristique id at nam
-          sit neque, risus sapien turpis cursus. Elementum integer sed dictumst
-          et elementum imperdiet nisl. Nulla arcu enim sed mauris. Eu quam
-          imperdiet ultricies mauris facilisis. Mattis convallis ut dignissim
-          turpis consectetur quam accumsan, lorem nisl. Consequat aliquet eget
-          suscipit non. Lectus cras aliquam maecenas ultricies a scelerisque at.
-        </Paragraphs>
+        <Paragraphs>{props?.about}</Paragraphs>
 
         <FlexBetween>
-          <HeaderThree>Services (12)</HeaderThree>
+          <HeaderThree>Services ({props?.services?.length})</HeaderThree>
+          {/* <HeaderThree>Services ({services.length})</HeaderThree> */}
           <FlexNav>
-            <ButtonIcon onClick={prev} >
-              <Image src={'/icons/prev-primary.svg'} width={12} height={14} />
-            </ButtonIcon>
+            {props?.services?.length > 4 ?
+              <ButtonIcon onClick={prev} >
+                <Image src={'/icons/prev-primary.svg'} width={12} height={14} />
+              </ButtonIcon>
+              :
+              <ButtonIcon style={{ cursor: 'not-allowed' }}>
+                <Image src={'/icons/prev-gray.svg'} width={12} height={14} />
+              </ButtonIcon>
+            }
         &emsp;
-        <ButtonIcon onClick={next} >
-              <Image src={'/icons/next-primary.svg'} width={12} height={14} />
-            </ButtonIcon>
+
+            {props?.services?.length > 4 ?
+              <ButtonIcon onClick={next} >
+                <Image src={'/icons/next-primary.svg'} width={12} height={14} />
+              </ButtonIcon>
+              :
+              <ButtonIcon style={{ cursor: 'not-allowed' }}>
+                <Image src={'/icons/next-gray.svg'} width={12} height={14} />
+              </ButtonIcon>
+            }
           </FlexNav>
         </FlexBetween>
 
@@ -201,39 +278,47 @@ const Profile = (props) => {
 
 
 
-      <ProfileServices id="servicesScroll"  onMouseEnter={scroll}>
-        {testData.map((data, index) => (
-            <ProfileServicesCard
-              key={index}
-              serviceImage={data.img}
-              serviceName={data.name}
-              serviceFee={data.fee}
-              serviceCompleted={data.num}
-              toggle={toggleModal}
-            />
+      <ProfileServices id="servicesScroll" onMouseEnter={scroll}>
+        {/* {services.map((data, index) => ( */}
+        {props?.services?.map((data, index) => (
+          <ProfileServicesCard
+            key={index}
+            // serviceImage={data.img}
+            serviceImage={'https://via.placeholder.com/500x500.png?text=Service+Image'}
+            serviceName={data.name}
+            serviceCategory={'Category Name'}
+            serviceFee={'$' + data.price}
+            // serviceCompleted={data.num}
+            serviceCompleted={0}
+            toggle={() => toggleModal(data.id)}
+          />
         ))}
       </ProfileServices>
 
 
-      {isPublic ? (
-        <ButtonPrimary>
-          <FlexBetween>
-            <Image src="/icons/send-white.svg" width={20} height={20} />
-            &nbsp;&nbsp;SEND A MESSAGE
-          </FlexBetween>
-        </ButtonPrimary>
-      ) : (
-          <ButtonTransparent>
-            <FlexBetween>
-              <Image src="/icons/send.svg" width={20} height={20} />
-            &nbsp;&nbsp;SEND A MESSAGE
-          </FlexBetween>
-          </ButtonTransparent>
-        )}
 
       <br />
 
       <BodyContainer>
+
+        {isPublic ? (
+          <ButtonPrimary>
+            <FlexBaseline>
+              <Image src="/icons/send-white.svg" width={20} height={20} />
+              &nbsp;&nbsp;SEND A MESSAGE
+          </FlexBaseline>
+          </ButtonPrimary>
+        ) : (
+            <ButtonTransparent>
+              <FlexBaseline>
+                <Image src="/icons/send.svg" width={20} height={20} />
+                &nbsp;&nbsp;SEND A MESSAGE
+          </FlexBaseline>
+            </ButtonTransparent>
+          )}
+
+
+
         <HeaderThree>Reviews (7)</HeaderThree>
         <ReviewCard />
         <ReviewCard />
@@ -242,9 +327,13 @@ const Profile = (props) => {
         <ReviewCard />
         <ReviewCard />
         <ReviewCard />
+
+        <FlexBaseline>
+          <FlexBaselineMobile>MORE</FlexBaselineMobile>
+        </FlexBaseline>
+
       </BodyContainer>
 
-      <ButtonPrimary>MORE</ButtonPrimary>
 
       <Modal modalActive={modalActive} setModalActive={setModalActive} content={<ModalContent />} />
 
@@ -253,3 +342,5 @@ const Profile = (props) => {
 };
 
 export default Profile;
+
+

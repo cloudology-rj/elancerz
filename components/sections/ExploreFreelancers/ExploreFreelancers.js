@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { useRouter } from 'next/router';
 
 import Image from 'next/image';
 
-import { IsMobileContext } from 'components/Context/IsMobile';
+import { IsMobileContext } from 'context/IsMobile';
 
 import {
   ButtonPrimary,
@@ -11,7 +11,7 @@ import {
 } from '@/components/global/Button';
 import { HeaderThree, HeaderTwo } from '@/components/global/Text';
 
-import FreelancerList from '../FreelancerList/FreelancerList';
+import FreelancerList from '../../search/FreelancerList/FreelancerList';
 
 import {
   CategoriesContainer,
@@ -69,7 +69,7 @@ const ExploreFreelancers = (props) => {
         </div>
       )}
 
-      <FreelancerList />
+      <FreelancerList list={freelancersData} />
     </>
   );
 };
@@ -77,3 +77,5 @@ const ExploreFreelancers = (props) => {
 ExploreFreelancers.propTypes = {};
 
 export default ExploreFreelancers;
+
+const freelancersData = [1, 2, 3];

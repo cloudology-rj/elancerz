@@ -22,9 +22,11 @@ export const FormContainer = styled.div`
   }
   @media ${(props) => props.theme.mediaQueries.laptop} {
     width: 60%;
+    min-width: 631px;
   }
   @media ${(props) => props.theme.mediaQueries.desktop} {
     width: 40%;
+    min-width: 631px;
   }
   place-items: left;
   text-align: left;
@@ -32,16 +34,6 @@ export const FormContainer = styled.div`
 `;
 
 
-export const HeroImage = styled.div`
-    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)), url("../images/banner.png");
-    height: 754px;
-    width:100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-    padding:1.5em;
-`
 
 export const FlexBetween = styled.div`
 display: flex;
@@ -64,7 +56,7 @@ export const ProfileServices = styled.div`
     width:100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: flex-start;
 `;
 
 export const ProfileServicesItem = styled.div`
@@ -78,11 +70,17 @@ export const ProfileServicesContainer = styled.div`
   @media ${(props) => props.theme.mediaQueries.mobile} {
     width: 100%;
   }
+  @media ${(props) => props.theme.mediaQueries.tablet} {
+    width: 90%;
+  }
   @media ${(props) => props.theme.mediaQueries.laptop} {
-    width: 80%;
+    width: 65%;
   }
   @media ${(props) => props.theme.mediaQueries.desktop} {
     width: 50%;
+  }
+  @media ${(props) => props.theme.mediaQueries.largeScreen} {
+    width: 40%;
   }
   place-items: left;
   text-align: left;

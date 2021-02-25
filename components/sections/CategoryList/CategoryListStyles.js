@@ -7,7 +7,7 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 margin-top:15px;
-margin-bottom:6px;
+margin-bottom:10px;
 `
 
 export const ListContainer = styled.div`

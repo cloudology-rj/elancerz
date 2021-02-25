@@ -31,9 +31,6 @@ export const HeaderFlex = styled.div`
 `;
 
 export const Flexbetween = styled.div`
-  ${mixins.flexAligned}
+  ${mixins.flex}
   gap:6px;
 `;
-
-
-

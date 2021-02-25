@@ -1,7 +1,7 @@
-import React, {useContext} from 'react'
+import { useContext } from 'react';
 import {useRouter} from 'next/router'
 import SettingsComponent from 'components/settings'
-import {IsMobileContext} from 'components/Context/IsMobile'
+import {IsMobileContext} from 'context/IsMobile'
 
 const Section = () => {
     const router = useRouter()

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 import { ButtonOpacity } from '@/components/global/Button';
@@ -10,7 +10,7 @@ const StyledModal = styled.div`
     height: 100%;
     top: 0;
     left: 0;
-    background-color: rgba(74, 82, 104, 0.9);
+    background-color: rgb(22 28 51 / 84%);
     opacity: 0;
     pointer-events: none;
   }
@@ -20,7 +20,7 @@ const StyledModal = styled.div`
     height: 100%;
     top: 0;
     left: 0;
-    background-color: rgba(74, 82, 104, 0.9);
+    background-color: rgb(22 28 51 / 84%);
     opacity: 1;
     pointer-events: unset;
     display: grid;
@@ -31,8 +31,8 @@ const StyledModal = styled.div`
     .card {
       position: relative;
       background-color: white;
-      padding: 2rem;
-      width: 80vw;
+      padding: 1rem;
+      width: 90vw;
       border: 1px solid rgba(14, 19, 44, 0.05);
       box-shadow: 0px 20px 36px -8px rgba(14, 14, 44, 0.16),
         0px 1px 1px rgba(14, 19, 44, 0.04);
@@ -43,6 +43,7 @@ const StyledModal = styled.div`
       animation: float 500ms forwards;
       @media ${(props) => props.theme.mediaQueries.laptop} {
         max-width: 540px;
+        padding: 2rem;
       }
       .close-btn {
         position: absolute;
@@ -74,6 +75,12 @@ const StyledModal = styled.div`
   }
 `;
 
+
+const StyledClose = styled(ButtonOpacity)`
+  padding:1em;
+`
+
+
 const Modal = (props) => {
   return (
     <StyledModal>
@@ -81,12 +88,12 @@ const Modal = (props) => {
       <div className={props.modalActive ? 'overlay active' : 'overlay'}>
         <div className="modal">
           <div className="card">
-            <ButtonOpacity
+            <StyledClose
               className="close-btn"
               onClick={() => props.setModalActive(!props.modalActive)}
             >
               <Image src="/icons/close-primary.svg" width={14} height={14} />
-            </ButtonOpacity>
+            </StyledClose>
             {props.content}
           </div>
         </div>

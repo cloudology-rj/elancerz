@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 import Container from '@/components/global/Container';
@@ -17,7 +16,7 @@ const About = (props) => {
   return (
     <AboutContainer>
       <Container>
-        <AboutHeading>What is Elancerz</AboutHeading>
+        <AboutHeading>What is Elancerz?</AboutHeading>
         <AboutContent>
           <VideoSample></VideoSample>
 
