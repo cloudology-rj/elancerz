@@ -4,7 +4,7 @@ module.exports = {
       return [
         {
           // matching all API routes
-          source: "/api/:path*",
+          source: "https://ppm-backend.tk/rest/v1/:path*",
           headers: [
             { key: "Access-Control-Allow-Credentials", value: "true" },
             { key: "Access-Control-Allow-Origin", value: "*" },
