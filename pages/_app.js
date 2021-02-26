@@ -2,6 +2,7 @@ import { QueryClientProvider, QueryClient } from 'react-query';
 import { IsMobileContextProvider } from '../context/IsMobile';
 
 import { AuthProvider } from '../context/AuthProvider';
+import { ToastProvider } from '../context/ToastProvider';
 
 import Theme from '../styles/theme';
 import '../styles/dropzone.custom.css';
@@ -21,7 +22,9 @@ function MyApp({ Component, pageProps }) {
         <GoogleFonts href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Open+Sans:wght@600;700&display=swap" />
         <AuthProvider>
           <QueryClientProvider client={queryClient}>
-            <Component {...pageProps} />
+            <ToastProvider>
+              <Component {...pageProps} />
+            </ToastProvider>
           </QueryClientProvider>
         </AuthProvider>
       </IsMobileContextProvider>

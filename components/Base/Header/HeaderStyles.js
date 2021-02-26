@@ -4,7 +4,7 @@ import { ButtonSecondary } from '@/components/global/Button';
 export const NavbarContainer = styled.nav`
   display: flex;
   justify-content: space-between;
-  padding: 40px 24px;
+  padding: 20px 24px;
 `;
 
 export const HeroTitle = styled.h1`

@@ -6,6 +6,7 @@ import apiCall from '../../../helpers/fetch';
 import { fetchMe } from '../../../api/queries';
 
 import { useAuth } from '../../../context/AuthProvider';
+import { useToast } from '../../../context/ToastProvider';
 import { IsMobileContext } from '../../../context/IsMobile';
 
 import {
@@ -32,6 +33,7 @@ import { BodyLight } from '../AccountStyles';
 const SignIn = ({ isModal, onSwitch, onPasswordReset, redirect }) => {
   const { setIsLogin, setToken, isLogin } = useAuth();
   const [isMobile] = useContext(IsMobileContext);
+  const { reset } = useToast();
 
   if (isMobile && isLogin) {
     Router.push('/dashboard');
@@ -68,6 +70,7 @@ const SignIn = ({ isModal, onSwitch, onPasswordReset, redirect }) => {
                 if (data.email_verified_at) {
                   helpers.setStatus({ success: 'signed in' });
                   setToken(res.access_token);
+                  reset();
                   redirect && redirect();
                 } else {
                   helpers.setStatus({

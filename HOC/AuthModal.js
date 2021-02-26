@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Router from 'next/router';
 
-
 import Modal from '@/components/global/Modal';
 import Signin from '../components/account/Signin/Signin';
 import ForgotPassword from '../components/account/ForgotPassword/ForgotPassword';
@@ -32,16 +31,11 @@ const withAuthModal = (Component) => (props) => {
   };
 
   const goToUser = () => {
-
-    console.log('running')
+    console.log('running');
     const { id } = props;
     // if no id was found redirect to dashboard after signing in
     id ? Router.push(`/profile/view/${props}`) : Router.push('/dashboard');
-
   };
-
-
-
 
   return (
     <>
@@ -60,7 +54,14 @@ const withAuthModal = (Component) => (props) => {
       <Modal
         modalActive={showSignup}
         setModalActive={setShowSignup}
-        content={<Signup onSwitch={switchToSignup} isModal={true} redirect={() => goToUser()} />}
+        content={
+          <Signup
+            onSwitch={switchToSignup}
+            isModal={true}
+            redirect={() => goToUser()}
+            toggleSignup={setShowSignup}
+          />
+        }
       />
       <Modal
         modalActive={showForgotPassword}

@@ -11,6 +11,9 @@ import ForgotPassword from '../../account/ForgotPassword/ForgotPassword';
 import Input from '@/components/global/Input';
 import { LogoBig } from '@/components/global/Logo';
 import AuthModal from '../../../HOC/AuthModal';
+import Toast from '../../global/Alert';
+
+import { useToast } from '../../../context/ToastProvider';
 
 import {
   NavbarContainer,
@@ -24,6 +27,10 @@ import {
 
 const Header = ({ signin, signup }) => {
   const router = useRouter();
+
+  const { toastData, toast } = useToast();
+
+  console.log('toast', toast);
 
   const [keyword, setKeyword] = useState('');
 
@@ -48,6 +55,7 @@ const Header = ({ signin, signup }) => {
         </NavbarButton>
       </NavbarContainer>
       <Container>
+        {toast && <Toast {...toastData} />}
         <HeaderContent>
           <HeroTitle>
             Looking for the perfect
@@ -73,8 +81,6 @@ const Header = ({ signin, signup }) => {
           </ButtonContainer>
         </HeaderContent>
       </Container>
-
-  
     </HeaderContainer>
   );
 };
