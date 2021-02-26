@@ -128,6 +128,15 @@ export const createChat = async ({ ...data }) => {
 };
 
 
+
+// Delete deleteConvo
+export const deleteConvo = async (token, id) => {
+  // console.log('msg:', data);
+  const chat = await apiCall(`/message/${id}`, 'DELETE', token);
+  return chat;
+};
+
+
 // QUOTE
 
 // CREATE quote

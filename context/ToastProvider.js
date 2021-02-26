@@ -11,8 +11,8 @@ export const ToastProvider = ({ children }) => {
   const {user} = useAuth();
 
   useEffect(() => {
-//     if(user && data.email_verified_at){
-    if(user){
+    if(user ){
+      // if(user && data.email_verified_at){
         reset();
     }
   },[user])

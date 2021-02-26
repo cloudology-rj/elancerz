@@ -47,24 +47,19 @@ const ConversationBox = ({ token, getconvo, id, route }) => {
 
   // return null
   const sendMessage = async () => {
+
+    let element = document.querySelector(".elancerz-convoBox")
     let msg = document.getElementById("msg-input").value
     let cleanMsg = {
-      // "created_by": getconvo?.created_by_user?.id,
       "received_by": id,
       "message": msg.toString(),
       "message_id": roomID
     }
-
-    // console.info(roomID);
-    // console.warn(cleanMsg);
-
-
     if (msg != "") {
-      // setconvo([...convo, cleanMsg])
-      // console.log('log: ', [{ ...convo, ...cleanMsg }]);
       await createChat({ cleanMsg, token })
       querClient.invalidateQueries('messagesQuery')
       document.getElementById("msg-input").value = ""
+      element.scrollTop = element.scrollHeight;
     }
 
   }
@@ -115,36 +110,25 @@ const ConversationBox = ({ token, getconvo, id, route }) => {
 
 
     const ModalContent = () => {
+      try {
+        return (
+          <>
+            <HeaderThree className="card-header">{'Payment Options'}</HeaderThree>
+            <br />
+            <FlexLine />
+            <br />
+            <HeaderThree className="card-header">Website Build : $100</HeaderThree>
+            <br />
+            <PayPalScriptProvider options={{ "client-id": "AR2Xb9zqz1Mo-Ig5ir6HMlJH0cij2j9u_3V8YECWty29XU4Qg7TvHVwPK2-GR8yDnCtNVwClw2a441hK" }}>
+              <PayPalButtons createOrder={createOrder} forceReRender={100} style={{ color: "blue", shape: "pill", label: "pay", height: 40 }} />
+            </PayPalScriptProvider>
+          </>
 
+        )
+      } catch (error) {
+        return null
+      }
 
-      const initialOptions = {
-        "client-id": "test",
-        currency: "USD",
-        intent: "capture",
-        "data-client-token": "abc123xyz ==",
-        purchase_units: [
-          {
-            amount: {
-              value: 100,
-            },
-          },
-        ]
-      };
-
-      return (
-        <>
-          <HeaderThree className="card-header">{'Payment Options'}</HeaderThree>
-          <br />
-          <FlexLine />
-          <br />
-          <HeaderThree className="card-header">Website Build : $100</HeaderThree>
-          <br />
-          <PayPalScriptProvider options={{ "client-id": "AR2Xb9zqz1Mo-Ig5ir6HMlJH0cij2j9u_3V8YECWty29XU4Qg7TvHVwPK2-GR8yDnCtNVwClw2a441hK" }}>
-            <PayPalButtons createOrder={createOrder} forceReRender={100} style={{ color: "blue", shape: "pill", label: "pay", height: 40 }} />
-          </PayPalScriptProvider>
-        </>
-
-      )
     }
 
 
@@ -153,7 +137,7 @@ const ConversationBox = ({ token, getconvo, id, route }) => {
       <>
         {
           getconvo?.chats?.length > 0 ?
-            <MessagesConvo>
+            <MessagesConvo className="elancerz-convoBox">
               {/* <Conversation /> */}
               <Messages>
                 {getconvo?.chats.map((e, key) => {

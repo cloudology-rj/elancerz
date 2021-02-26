@@ -31,15 +31,17 @@ const options = [
   },
 ];
 
+
+import { deleteConvo } from "../../../api/queries";
+import { useLocalStorage } from '../../../hooks/useLocalStorage';
+// import { useQueryClient } from "react-query";
+
 const MessageHeader = ({ data, id, login }) => {
 
-
-  // console.warn(data);
-
-
+  const [token, setToken] = useLocalStorage('elancerztoken', null);
   const [modalActive, setModalActive] = useState(false);
   const [isMobile] = useContext(IsMobileContext);
-
+  // const queryClient = useQueryClient()
   const router = useRouter();
 
 
@@ -60,6 +62,14 @@ const MessageHeader = ({ data, id, login }) => {
     setModalActive(!modalActive);
   };
 
+
+  const deleteConversation = async () => {
+    await deleteConvo(token, data.id)
+    setModalActive(false)
+    // queryClient.invalidateQueries('messagesQuery')
+    router.push('/messages')
+  }
+
   const ModalContent = () => {
     return (
       <>
@@ -75,7 +85,7 @@ const MessageHeader = ({ data, id, login }) => {
         <br />
         <ButtonDanger
           className="close-account-btn"
-          onClick={() => setModalActive(!modalActive)}
+          onClick={deleteConversation}
         >
           {' '}
           DELETE
