@@ -28,7 +28,7 @@ const MessagesServicesCard = ({ id }) => {
 
 
     return (
-      <GrabContainer id="grabDiv">
+      <GrabContainer>
         <CardContainer>
           <CardImage
             src={'https://via.placeholder.com/500x500.png?text=Service+Image'}
