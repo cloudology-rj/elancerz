@@ -43,9 +43,17 @@ const MessageHeader = ({ data, id, login }) => {
   const router = useRouter();
 
 
-  const reciever = data?.received_by_user?.first_name + ' ' + data?.received_by_user?.last_name
+  const cfname = data?.created_by_user.first_name == null ? 'First Name' : data?.created_by_user.first_name
+  const clname = data?.created_by_user.last_name == null ? 'Last Name' : data?.created_by_user.last_name
 
-  const creator = data?.created_by_user?.first_name + ' ' + data?.created_by_user?.last_name
+  const rfname = data?.received_by_user.first_name == null ? 'First Name' : data?.received_by_user.first_name
+  const rlname = data?.received_by_user.last_name == null ? 'Last Name' : data?.received_by_user.last_name
+
+
+
+  const creator = cfname + ' ' + clname
+  const receiver = rfname + ' ' + rlname
+
   // console.warn(reciever);
 
   const toggleModal = () => {
@@ -89,7 +97,7 @@ const MessageHeader = ({ data, id, login }) => {
           <div>
             <Flex gap="7px">
               <Status />
-              <Name>{login == data?.received_by_user?.id ? creator : reciever}</Name>
+              <Name>{login == data?.received_by_user?.id ? creator : receiver}</Name>
               <Job>{'Job title'}</Job>
             </Flex>
             <PreTitle>6:29 PM (UTC + 07:30)</PreTitle>
@@ -103,7 +111,7 @@ const MessageHeader = ({ data, id, login }) => {
             <>
               <Flex gap="7px">
                 <Status />
-                <Name>{login == data?.received_by_user?.id ? creator : reciever}</Name>
+                <Name>{login == data?.received_by_user?.id ? creator : receiver}</Name>
               </Flex>
               <Job>{'Job Title'}</Job>
             </>

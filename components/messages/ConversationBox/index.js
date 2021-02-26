@@ -168,7 +168,9 @@ const ConversationBox = ({ token, getconvo, id, route }) => {
                             {e?.message?.replace(/\[elance-service].*/gi, '')}
                             <br />
                             <br />
-                            <ServiceCard id={e?.message?.match(/\[elance-service](.*)\[\/elance-service]/)[1]} />
+                            <div onClick={() => settoglleModal(true)}>
+                              <ServiceCard id={e?.message?.match(/\[elance-service](.*)\[\/elance-service]/)[1]} />
+                            </div>
                           </MessageLeft>
                           :
                           <MessageLeft>{e?.message}</MessageLeft>
@@ -183,7 +185,9 @@ const ConversationBox = ({ token, getconvo, id, route }) => {
                             {e?.message?.replace(/\[elance-service].*/gi, '')}
                             <br />
                             <br />
-                            <ServiceCard id={e?.message?.match(/\[elance-service](.*)\[\/elance-service]/)[1]} />
+                            <div onClick={() => settoglleModal(true)}>
+                              <ServiceCard id={e?.message?.match(/\[elance-service](.*)\[\/elance-service]/)[1]} />
+                            </div>
                           </MessageRight>
                           :
                           <MessageRight>{e?.message}</MessageRight>

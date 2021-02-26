@@ -16,8 +16,14 @@ const Person = ({ data, id, login }) => {
 
   // console.log('compoennt list ', props);
 
-  const creator = data?.created_by_user.first_name + ' ' + data?.created_by_user.last_name
-  const receiver = data?.received_by_user.first_name + ' ' + data?.received_by_user.last_name
+  const cfname = data?.created_by_user.first_name == null ? 'First Name' : data?.created_by_user.first_name
+  const clname = data?.created_by_user.last_name == null ? 'Last Name' : data?.created_by_user.last_name
+
+  const rfname = data?.received_by_user.first_name == null ? 'First Name' : data?.received_by_user.first_name
+  const rlname = data?.received_by_user.last_name == null ? 'Last Name' : data?.received_by_user.last_name
+
+  const creator = cfname + ' ' + clname
+  const receiver = rfname + ' ' + rlname
 
   const lastMsg = data?.chats.slice(-1).pop()
   const lastSender = (lastMsg.user_id == data?.created_by_user.id) ? creator : receiver
