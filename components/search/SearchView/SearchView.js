@@ -1,7 +1,9 @@
 import styled from 'styled-components';
-import { useState } from 'react';
-import { HeaderThree, HeaderTwo } from '@/components/global/Text';
+import { useState, useEffect } from 'react';
 
+import { useAuth } from '../../../context/AuthProvider';
+
+import { HeaderThree, HeaderTwo } from '@/components/global/Text';
 import Input from '@/components/global/Input';
 import Dropdown from '@/components/global/Dropdown';
 import Container from '@/components/global/Container';
@@ -26,16 +28,30 @@ import {
 const SearchPage = ({ setSelected, setOptions, options, query, data }) => {
   const [toggleFilter, setToggleFilter] = useState(false);
   const [view, setView] = useState(false);
+  const { user } = useAuth();
+  const [freelancer, setFreelancers] = useState(data ? data.pages[0].data : []);
 
-  if (!data  || data.pages[0].data.length < 1 || data.pages[0].data == undefined) {
+  useEffect(() => {
+    if (user && freelancer) {
+      const sortedFreelancers = freelancer;
+
+      sortedFreelancers.filter((freelancer) => freelancer.id !== user.id);
+
+      setFreelancers(sortedFreelancers);
+    }
+  }, [data, user]);
+
+  if (
+    !data ||
+    data.pages[0].data.length < 1 ||
+    data.pages[0].data == undefined
+  ) {
     return (
       <NotFound>
         <HeaderTwo>No Freelancers found, please try again</HeaderTwo>
       </NotFound>
     );
   }
-
-
 
   return (
     <>
@@ -64,7 +80,7 @@ const SearchPage = ({ setSelected, setOptions, options, query, data }) => {
             </Flex>
           </FlexAlignCenter>
 
-          <ViewFreelancers view={view} freelancers={data.pages[0].data} />
+          <ViewFreelancers view={view} freelancers={freelancer} />
         </div>
       </Container>
 

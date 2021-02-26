@@ -8,37 +8,35 @@ import { fetchProfileFreelancer } from '../../../api/queries';
 import Layout from '../../../components/Base/Layout/Layout';
 import Profile from '../../../components/profile/viewProfile/';
 
-
-
 import WithLoading from '../../../HOC/WithLoadingAndError';
-
-
 
 const ProfileWithLoading = WithLoading(Profile);
 
 const FreelanceProfile = () => {
   const router = useRouter();
 
-  const { token, isLogin } = useAuth();
-  
-  
-  if (router.isReady) {
-    
+  const { token, isLogin, user } = useAuth();
+
   const { id } = router.query;
-    
   const isIdAvailable = id !== undefined && token !== null;
 
-  if (!isLogin) {
+
+
+  if (user && user.id === id) {
     router.back();
   }
 
-  const { isLoading, error, data } = useQuery(
-    'profilefreelancer',
-    async () => await fetchProfileFreelancer(id, token),
-    { enabled: isIdAvailable }
-  );
-    
-    
+  if (router.isReady) {
+    if (!isLogin) {
+      router.back();
+    }
+
+    const { isLoading, error, data } = useQuery(
+      'profilefreelancer',
+      async () => await fetchProfileFreelancer(id, token),
+      { enabled: isIdAvailable }
+    );
+
     return (
       <Layout>
         <ProfileWithLoading

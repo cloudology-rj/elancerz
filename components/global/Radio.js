@@ -81,11 +81,11 @@ label {
 const RadioButton = (props) => {
     return (
         <Radio className="radio-inline">
-            <input 
-                id={props.id} 
-                onChange={props.changed} 
-                value={props.value} 
-                type="radio" 
+            <input
+                id={props.id}
+                onChange={props.changed}
+                value={props.value}
+                type="radio"
                 checked={props.isSelected}
             />
             <label htmlFor={props.id}>{props.label}</label>

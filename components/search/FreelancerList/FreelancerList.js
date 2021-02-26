@@ -5,10 +5,14 @@ import FreelancerCard from '../../Cards/FreelancerCard/FreelancerCard';
 import { ListContainer } from './FreelancerListStyles';
 
 const FreelancerList = ({ list }) => {
+
+
+  
   return (
     <ListContainer>
       {list !== [] &&
         list.map((freelancer) => (
+
           <FreelancerCard
             key={freelancer.id}
             {...freelancer}

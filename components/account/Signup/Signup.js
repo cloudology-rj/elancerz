@@ -79,6 +79,7 @@ const Signup = ({ isModal, onSwitch, redirect }) => {
                 console.log('DONE SIGNING UP');
                 // window.localStorage.setItem('token', JSON.stringify(res.data));
                 console.log(res);
+                onSwitch()
               })
               .catch(function (error) {
                 helpers.setStatus({

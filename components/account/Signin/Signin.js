@@ -3,9 +3,10 @@ import Router from 'next/router';
 import { useContext } from 'react';
 import { Formik, Form } from 'formik';
 import apiCall from '../../../helpers/fetch';
+import { fetchMe } from '../../../api/queries';
 
 import { useAuth } from '../../../context/AuthProvider';
-import {IsMobileContext} from '../../../context/IsMobile'
+import { IsMobileContext } from '../../../context/IsMobile';
 
 import {
   HeaderThree,
@@ -14,15 +15,10 @@ import {
   ErrorMessage,
   Divider,
 } from '@/components/global/Text';
-import {
-  ButtonPrimary,
-
-} from '@/components/global/Button';
+import { ButtonPrimary } from '@/components/global/Button';
 import Input from '@/components/global/Input';
 import Checkbox from '@/components/global/Checkbox';
 import SocialMediaButtons from '../SocialMedia/';
-
-
 
 import {
   FlexContainer,
@@ -36,8 +32,6 @@ import { BodyLight } from '../AccountStyles';
 const SignIn = ({ isModal, onSwitch, onPasswordReset, redirect }) => {
   const { setIsLogin, setToken, isLogin } = useAuth();
   const [isMobile] = useContext(IsMobileContext);
-
-
 
   if (isMobile && isLogin) {
     Router.push('/dashboard');
@@ -66,14 +60,23 @@ const SignIn = ({ isModal, onSwitch, onPasswordReset, redirect }) => {
 
           apiCall('/user/login', 'POST', '', data)
             .then((res) => {
-              helpers.setStatus({ success: 'signed in' });
-              setIsLogin(true);
+              //   setIsLogin(true);
 
-              setToken(res.access_token);
-             redirect &&  redirect();
+              fetchMe(res.access_token).then((data) => {
+                console.log(data);
+
+                if (data.email_verified_at) {
+                  helpers.setStatus({ success: 'signed in' });
+                  setToken(res.access_token);
+                  redirect && redirect();
+                } else {
+                  helpers.setStatus({
+                    verify: 'Please verify your email before proceeding',
+                  });
+                }
+              });
             })
             .catch((err) => {
-              console.log(err.response);
               helpers.setStatus({ error: 'User does not exist' });
             });
         }}
@@ -111,6 +114,9 @@ const SignIn = ({ isModal, onSwitch, onPasswordReset, redirect }) => {
 
             {status && status.error && (
               <ErrorMessage>{status.error}</ErrorMessage>
+            )}
+            {status && status.verify && (
+              <ErrorMessage>{status.verify}</ErrorMessage>
             )}
 
             <ButtonPrimary type="submit" fullWidth>
