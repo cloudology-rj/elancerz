@@ -5,35 +5,38 @@ import { HeaderTwo } from '@/components/global/Text';
 import Input from '@/components/global/Input';
 
 import ConversationList from '../ConversationList/';
-const peopleList = [
-  {
-    name: 'Brandon Kenter',
-    job: 'Graphic Designer',
-    message: 'Quam Fermentum tellus.',
-    unread: true,
-    selected: false,
-    id: 1,
-  },
 
-  {
-    name: 'Craig Lubin',
-    job: 'Front End Developer',
-    message: 'Elit maecenas arcu netus nisl.',
-    unread: false,
-    selected: false,
-    id: 2,
-  },
-];
 
-const ConversationMobile = (props) => {
-  const [peoples, setPeoples] = useState(peopleList);
+import { useQuery } from "react-query";
+import { getMessages } from '../../../api/queries';
+import styled from 'styled-components';
+
+const ConversationMobile = ({ token }) => {
+
+
+  const { isLoading, error, data: srv } = useQuery(
+    'messagesQuery', () => getMessages(token)
+  );
+
+  if (error)
+    return (
+      <NotFound>
+        <HeaderTwo>Sorry, something went wrong with your request</HeaderTwo>
+      </NotFound>
+    );
+
+  // return null
+  // const [peoples, setPeoples] = useState(peopleList);
+
 
   return (
     <div>
       <HeaderTwo>Messages</HeaderTwo>
       <br />
       <Input type="text" placeholder="enter a message" search={true} />
-      <ConversationList list={peoples} />
+      <ConversationList list={srv?.data} />
+      {/* <Sidebar peoples={srv?.data} /> */}
+
     </div>
   );
 };
@@ -41,3 +44,12 @@ const ConversationMobile = (props) => {
 ConversationMobile.propTypes = {};
 
 export default ConversationMobile;
+
+export const NotFound = styled.div`
+  width: 100%;
+  height: 50vh;
+  display: grid;
+  align-items:center;
+  justify-content:center;
+  place-items: center;
+`;

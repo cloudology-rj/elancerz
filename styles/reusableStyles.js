@@ -5,6 +5,5 @@ export const Flex = styled.div`
   ${mixins.flex};
   gap: ${(props) => props.gap};
   flex-direction: ${(props) => props.direction};
-
- 
+  justify-content: ${(props) => props.align};
 `;

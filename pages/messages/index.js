@@ -7,25 +7,14 @@ import Navbar from '../../components/Base/Navbar/Navbar';
 import ConversationMobile from '../../components/messages/ConversationMobile/';
 import ConversationMain from '../../components/messages/ConversationMain/';
 
-const MessagesContainer = styled.main`
-  padding: 8px;
-`;
+import { useAuth } from '../../context/AuthProvider';
 
-const MainContainer = styled.main`
-  margin-top: 90px;
-
-  body {
-    overflow: hidden;
-  }
-
-  @media ${(props) => props.theme.mediaQueries.laptop} {
-    margin-top: 0;
-  }
-`;
 
 const index = () => {
   const [isMobile] = useContext(IsMobileContext);
+  const { token, user } = useAuth();
 
+  // return null
   return (
     <MainContainer>
       <Navbar fixed={isMobile ? 1 : 0} />
@@ -35,18 +24,35 @@ const index = () => {
           <ConversationMobile />
         </MessagesContainer>
       ) : (
-        <ConversationMain />
-      )}
+          <ConversationMain token={token} />
+        )}
 
       <style jsx global>{`
-        body {
-          overflow: hidden;
-        }
-      `}</style>
+      body {
+        overflow: hidden;
+      }
+    `}</style>
     </MainContainer>
-  );
+  )
 };
 
 index.propTypes = {};
 
 export default index;
+
+
+export const MessagesContainer = styled.main`
+padding: 8px;
+`;
+
+export const MainContainer = styled.main`
+margin-top: 90px;
+
+body {
+  overflow: hidden;
+}
+
+@media ${(props) => props.theme.mediaQueries.laptop} {
+  margin-top: 0;
+}
+`;

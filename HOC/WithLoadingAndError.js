@@ -10,7 +10,6 @@ function WithLoadingAndError(Component) {
     ErrorComponent,
     ...props
   }) {
-    
     if (isLoading) {
       return <Loader />;
     }

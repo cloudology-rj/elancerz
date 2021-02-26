@@ -46,9 +46,9 @@ const ExploreCategories = (props) => {
         <CategoriesContainer>
           {categories.map((category, i) =>
             i < 3 ? (
-              <CategoryCard size="big" name={category} />
+              <CategoryCard key={i} size="big" name={category} />
             ) : (
-              <CategoryCard size="small" name={category} />
+              <CategoryCard  key={i}size="small" name={category} />
             )
           )}
         </CategoriesContainer>

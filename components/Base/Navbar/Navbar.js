@@ -47,18 +47,27 @@ const Navbar = ({ fixed }) => {
   const { isLogin } = useAuth();
 
   useEffect(() => {
-    window.localStorage.setItem('squares', JSON.stringify(searchQueries));
+    window.localStorage.setItem('histories', JSON.stringify(searchQueries));
   }, [searchQueries]);
 
-  useEffect(() => {
-    setKeyword(null);
-  }, [query]);
+  // useEffect(() => {
+  //   setKeyword(null);
+  // }, [query]);
 
   const handleEnter = (e) => {
     if (e.key === 'Enter') {
+      const currKeyword = keyword;
+
+      const histories = JSON.parse(window.localStorage.getItem('histories')) || []; //the "|| []" replaces possible null from localStorage with empty array
+      const newKeyword = currKeyword.replace('/', ' ');
+
+      if (histories.indexOf(newKeyword) == -1) {
+        histories.push(newKeyword);
+        setSearchQueries([...searchQueries, newKeyword]);
+      
+      }
+      router.push(`/search/${newKeyword}`);
       setKeyword('');
-      setSearchQueries([...searchQueries, keyword]);
-      router.push(`/search/${keyword}`);
     }
   };
 

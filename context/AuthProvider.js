@@ -56,7 +56,7 @@ export const AuthProvider = ({ children }) => {
 
 
 
-  const signInWithGoogle = () =>
+  const signInWithGoogle = (redirect) =>
     auth.signInWithPopup(googleProvider).then((data) => {
       const {
         isNewUser,
@@ -73,6 +73,7 @@ export const AuthProvider = ({ children }) => {
         })
           .then((res) => {
             console.log('Account created through firebase ');
+            redirect()
           })
           .catch((err) => console.log('ERROR IN SIGNING UP ', err));
       } else {

@@ -10,6 +10,7 @@ import Signin from '../../account/Signin/Signin';
 import ForgotPassword from '../../account/ForgotPassword/ForgotPassword';
 import Input from '@/components/global/Input';
 import { LogoBig } from '@/components/global/Logo';
+import AuthModal from '../../../HOC/AuthModal';
 
 import {
   NavbarContainer,
@@ -18,37 +19,13 @@ import {
   HeaderContainer,
   NavbarButton,
   ButtonContainer,
-  ButtonSecondaryStyle,
   HeaderForm,
 } from './HeaderStyles';
 
-const Header = (props) => {
+const Header = ({ signin, signup }) => {
   const router = useRouter();
 
   const [keyword, setKeyword] = useState('');
-  const [showSignin, setShowSignin] = useState(false);
-  const [showSignup, setShowSignup] = useState(false);
-  const [showForgotPassword, setShowForgotPassword] = useState(false);
-
-  const switchToSignin = () => {
-    console.log('Running');
-    setShowSignup(!showSignup);
-    setShowSignin(!showSignin);
-  };
-  const switchToSignup = () => {
-    setShowSignin(!showSignin);
-    setShowSignup(!showSignup);
-  };
-
-  const SwitchToForgotPassword = () => {
-    setShowSignin(!showSignin);
-    setShowForgotPassword(!showForgotPassword);
-  };
-
-  const switchToSignfromPassword = () => {
-    setShowForgotPassword(false);
-    setShowSignin(!showSignin);
-  };
 
   const HandleInput = (e) => {
     setKeyword(e.target.value);
@@ -66,24 +43,19 @@ const Header = (props) => {
         <LogoBig />
 
         <NavbarButton>
-          <ButtonPrimary onClick={() => setShowSignup(!showSignup)}>
-            Sign Up
-          </ButtonPrimary>
-          <ButtonTertiary onClick={() => setShowSignin(!showSignin)}>
-            Sign In
-          </ButtonTertiary>
+          <ButtonPrimary onClick={() => signup(true)}>Sign Up</ButtonPrimary>
+          <ButtonTertiary onClick={() => signin(true)}>Sign In</ButtonTertiary>
         </NavbarButton>
       </NavbarContainer>
       <Container>
         <HeaderContent>
           <HeroTitle>
             Looking for the perfect
-            <HighlightColor> freelance services </HighlightColor> 
+            <HighlightColor> freelance services </HighlightColor>
             for your business?
           </HeroTitle>
           <HeaderForm onSubmit={HandleSubmit}>
             <Input
-            
               type="text"
               placeholder="Try logo design"
               value={keyword}
@@ -102,31 +74,9 @@ const Header = (props) => {
         </HeaderContent>
       </Container>
 
-      <Modal
-        modalActive={showSignin}
-        setModalActive={setShowSignin}
-        content={
-          <Signin
-            onPasswordReset={SwitchToForgotPassword}
-            onSwitch={switchToSignin}
-            isModal={true}
-          />
-        }
-      />
-      <Modal
-        modalActive={showSignup}
-        setModalActive={setShowSignup}
-        content={<Signup onSwitch={switchToSignup} isModal={true} />}
-      />
-      <Modal
-        modalActive={showForgotPassword}
-        setModalActive={setShowForgotPassword}
-        content={
-          <ForgotPassword onSwitch={switchToSignfromPassword} isModal={true} />
-        }
-      />
+  
     </HeaderContainer>
   );
 };
 
-export default Header;
+export default AuthModal(Header);

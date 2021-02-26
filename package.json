@@ -10,6 +10,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@paypal/react-paypal-js": "^4.1.1",
     "array-move": "^3.0.1",
     "axios": "^0.21.1",
     "babel-plugin-inline-react-svg": "^1.1.2",

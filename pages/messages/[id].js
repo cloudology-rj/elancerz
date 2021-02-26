@@ -6,8 +6,43 @@ import { IsMobileContext } from '../../context/IsMobile';
 
 import ConversationMain from '../../components/messages/ConversationMain';
 import Navbar from '../../components/Base/Navbar/Navbar';
+import { useAuth } from '../../context/AuthProvider';
+// import Modal from '@/components/global/Modal';
 
-const MainContainer = styled.main`
+const MessagePage = (props) => {
+  const [isMobile] = useContext(IsMobileContext);
+  const router = useRouter();
+
+  const { token, user } = useAuth();
+  const { id } = router.query;
+
+  if (router.isReady) {
+    return (
+      <MainContainer>
+        <Navbar fixed={isMobile ? 1 : 0} />
+        {/* <ConversationMain id={id} /> */}
+        <ConversationMain token={token} id={id} route={router.asPath} />
+
+        <style jsx global>{`
+          body {
+            overflow: hidden;
+          }
+        `}</style>
+      </MainContainer>
+    );
+  }
+  else {
+    return null
+  }
+
+
+
+
+};
+
+export default MessagePage;
+
+export const MainContainer = styled.main`
   body {
     overflow: hidden;
   }
@@ -16,26 +51,3 @@ const MainContainer = styled.main`
     margin-top: 0;
   }
 `;
-
-const MessagePage = (props) => {
-  const [isMobile] = useContext(IsMobileContext);
-  const router = useRouter();
-
-  const { id } = router.query;
-
-  return (
-    <MainContainer>
-      <Navbar fixed={isMobile ? 1 : 0} />
-
-      <ConversationMain id={id} />
-
-      <style jsx global>{`
-        body {
-          overflow: hidden;
-        }
-      `}</style>
-    </MainContainer>
-  );
-};
-
-export default MessagePage;

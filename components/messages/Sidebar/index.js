@@ -7,7 +7,7 @@ import ConversationList from '../ConversationList';
 
 import { SidebarContainer, StickyContainer } from './SidebarStyles';
 
-const Sidebar = ({ peoples }) => {
+const Sidebar = ({ peoples, id, login }) => {
   return (
     <SidebarContainer>
       <StickyContainer>
@@ -15,7 +15,7 @@ const Sidebar = ({ peoples }) => {
       </StickyContainer>
       <br />
       <Input type="text" placeholder="Search messages" search={true} />
-      <ConversationList list={peoples} />
+      <ConversationList list={peoples} id={id} login={login} />
     </SidebarContainer>
   );
 };

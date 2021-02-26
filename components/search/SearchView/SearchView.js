@@ -27,7 +27,7 @@ const SearchPage = ({ setSelected, setOptions, options, query, data }) => {
   const [toggleFilter, setToggleFilter] = useState(false);
   const [view, setView] = useState(false);
 
-  if (data.pages[0].data.length < 1 || data.pages[0].data == undefined) {
+  if (!data  || data.pages[0].data.length < 1 || data.pages[0].data == undefined) {
     return (
       <NotFound>
         <HeaderTwo>No Freelancers found, please try again</HeaderTwo>

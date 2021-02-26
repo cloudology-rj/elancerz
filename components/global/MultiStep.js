@@ -30,7 +30,7 @@ it with condition to display a component
 
 */
 
-const MultiStep = ({ signInWithGoogle,currentStep, onSetStep, renderItems, ...props }) => {
+const MultiStep = ({ redirect,currentStep, onSetStep, renderItems, ...props }) => {
   return (
     <Formik {...props}>
       {({ values, errors, touched, handleChange, handleBlur, status }) => (
@@ -45,7 +45,7 @@ const MultiStep = ({ signInWithGoogle,currentStep, onSetStep, renderItems, ...pr
               handleChange,
               handleBlur,
               status,
-              signInWithGoogle
+              redirect
             )
           }
         </FormContainer>

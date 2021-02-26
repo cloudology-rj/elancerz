@@ -2,6 +2,11 @@ import Image from 'next/image';
 import Router from 'next/router';
 import PropTypes from 'prop-types';
 
+import AuthModal from '../../../HOC/AuthModal';
+
+import {useAuth} from '../../../context/AuthProvider'
+
+
 import { PreTitle } from '@/components/global/Text';
 import {
   CardContainer,
@@ -15,6 +20,8 @@ import {
 import YellowStar from '../../../public/icons/yellow-star.svg';
 import WhiteStar from '../../../public/icons/white-star.svg';
 
+
+
 const FreelancerCard = ({
   fullWidth,
   id,
@@ -22,14 +29,25 @@ const FreelancerCard = ({
   last_name,
   avatar,
   address,
+  openAuthModal,
   ...props
 }) => {
 
+  const {isLogin} = useAuth();
+
+
+  const viewProfile = () => {
+    if(!isLogin){
+      openAuthModal(true)
+    } else{
+      Router.push(`/profile/view/${id}`)
+    }
+  }
 
   return (
     <CardContainer
       fullWidth={fullWidth}
-      onClick={() => Router.push(`/profile/view/${id}`)}
+      onClick={() => viewProfile()}
     >
       <ImageContainer>
         <CardImage
@@ -62,4 +80,4 @@ const FreelancerCard = ({
 
 FreelancerCard.propTypes = {};
 
-export default FreelancerCard;
+export default AuthModal(FreelancerCard);

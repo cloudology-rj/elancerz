@@ -25,19 +25,17 @@ const SearchPage = (props) => {
   const [options, setOptions] = useState(optionsList);
   const [selected, setSelected] = useState('');
 
+  const queryIsAvailable = query !== undefined;
+
   const { data, error, isLoading } = useInfiniteQuery(
     `freelancers-${query}`,
-    (key, page) => fetchFreelancers(query, page)
+    async (key, page) => await fetchFreelancers(query, page),
+    { enabled: queryIsAvailable }
   );
-
-
-
-
 
   return (
     <CategoryContainer>
       <Layout>
-        
         <SearchViewWithHOC
           error={error}
           errorComponent={

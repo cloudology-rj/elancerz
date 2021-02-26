@@ -29,58 +29,7 @@ import Modal from '@/components/global/Modal';
 import ReviewCard from '../Cards/ReviewCard/ReviewCard';
 
 
-
-
-
-
-
-
 const Profile = ({ ...props }) => {
-
-  // localStorage.setItem('rememberMe', rememberMe);
-  const [_bg, set_bg] = useState()
-  const defaultBG = '/images/banner.png'
-  const bg = localStorage.getItem('el-bg');
-
-
-
-
-  useEffect(() => {
-    if (bg == null) {
-      localStorage.setItem('el-bg', defaultBG)
-      set_bg(defaultBG);
-    } else {
-      set_bg(localStorage.getItem('el-bg'));
-    }
-  }, [])
-
-
-
-
-  const HeroImage = styled.div`
-    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)),
-      url("${_bg}");
-    height: 480px;
-    width: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-    padding:1.5em;
-
-
-    @media ${(props) => props.theme.mediaQueries.mobile} {
-      margin: 0 1.5em 9em 1.5em;
-    }
-    @media ${(props) => props.theme.mediaQueries.desktop} {
-      margin: 0 1.5em 12em 1.5em;
-    }
-    @media ${(props) => props.theme.mediaQueries.largeScreen} {
-      margin: 0 1.5em 12em 1.5em;
-    }
-    `;
-
-
 
   // console.log(props.services);
 
@@ -290,7 +239,8 @@ const Profile = ({ ...props }) => {
             serviceFee={'$' + data.price}
             // serviceCompleted={data.num}
             serviceCompleted={0}
-            toggle={() => toggleModal(data.id)}
+            // toggle={() => toggleModal(data.id)}
+            toggle={() => { }}
           />
         ))}
       </ProfileServices>
@@ -344,3 +294,25 @@ const Profile = ({ ...props }) => {
 export default Profile;
 
 
+export const HeroImage = styled.div`
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)),
+    url('/images/banner.png');
+  height: 480px;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  padding:1.5em;
+
+
+  @media ${(props) => props.theme.mediaQueries.mobile} {
+    margin: 0 1.5em 9em 1.5em;
+  }
+  @media ${(props) => props.theme.mediaQueries.desktop} {
+    margin: 0 1.5em 12em 1.5em;
+  }
+  @media ${(props) => props.theme.mediaQueries.largeScreen} {
+    margin: 0 1.5em 12em 1.5em;
+  }
+`;

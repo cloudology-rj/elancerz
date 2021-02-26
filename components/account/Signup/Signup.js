@@ -3,18 +3,17 @@ import Router from 'next/router';
 
 import apiCall from '../../../helpers/fetch';
 
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
 import { useAuth } from '../../../context/AuthProvider';
+import { IsMobileContext } from '../../../context/IsMobile';
 
 import { signInWithFacebook } from '../../../firebase/firebase';
 
 import signupSchema from './signupSchema';
 
 import MultiStep from '@/components/global/MultiStep';
-
-import Facebook from '../../../public/icons/facebook-icon.svg';
-import Google from '../../../public/icons/google-icon.svg';
+import SocialMediaButtons from '../SocialMedia/';
 
 import { HeaderThree, ErrorMessage, Divider } from '@/components/global/Text';
 import {
@@ -34,13 +33,14 @@ import { Flex } from '../../../styles/reusableStyles';
 
 import { BodyLight } from '../AccountStyles';
 
-const Signup = ({ isModal, onSwitch }) => {
+const Signup = ({ isModal, onSwitch, redirect }) => {
   const [signupSuccess, setSignupSuccess] = useState(false);
   const [step, setStep] = useState(0);
+  const [isMobile] = useContext(IsMobileContext);
 
   const { setIsLogin, isLogin, signInWithGoogle } = useAuth();
 
-  if (isLogin) {
+  if (isMobile && isLogin) {
     Router.push('/dashboard');
   }
 
@@ -50,7 +50,7 @@ const Signup = ({ isModal, onSwitch }) => {
       <br />
 
       <MultiStep
-        signInWithGoogle={signInWithGoogle}
+        redirect={redirect}
         renderItems={FormikStep}
         currentStep={step}
         onSetStep={setStep}
@@ -79,15 +79,6 @@ const Signup = ({ isModal, onSwitch }) => {
                 console.log('DONE SIGNING UP');
                 // window.localStorage.setItem('token', JSON.stringify(res.data));
                 console.log(res);
-                // auth
-                //   .createUserWithEmailAndPassword(email, password)
-                //   .then(() => {
-                //     alert('Account created');
-                //     Router.push('/account/sign-in');
-                //   })
-                //   .catch((err) => {
-                //     alert(err);
-                //   });
               })
               .catch(function (error) {
                 helpers.setStatus({
@@ -132,26 +123,13 @@ const FormikStep = (
   handleChange,
   handleBlur,
   status = 'test',
-  signInWithGoogle
+  redirect
 ) => {
   switch (currentStep) {
     case 0:
       return (
         <FormGroup>
-          <ButtonFacebook fullWidth onClick={signInWithFacebook}>
-            <Flex direction="row">
-              <Facebook />
-              Continue with Facebook
-            </Flex>
-          </ButtonFacebook>
-
-          <ButtonTertiary isCenter fullWidth onClick={signInWithGoogle}>
-            <Flex gap="7px" direction="row">
-              <Google />
-              Continue with google
-            </Flex>
-          </ButtonTertiary>
-
+          <SocialMediaButtons />
           <Divider>or</Divider>
 
           <Input

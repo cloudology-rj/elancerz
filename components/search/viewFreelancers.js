@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
-
+import { PreTitle, Bold, HeaderTwo } from '@/components/global/Text';
 import FreelancerList from './FreelancerList/FreelancerList';
 import FreelancerListView from './FreelancerListView/FreelancerListView';
+
+
 
 const viewFreelancers = ({ freelancers, view }) => {
 

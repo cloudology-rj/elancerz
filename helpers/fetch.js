@@ -1,19 +1,16 @@
 import axios from 'axios';
 
 // axios.defaults.baseURL = 'http://127.0.0.1:8000/rest/v1';
-// axios.defaults.baseURL = 'http://3.36.76.18/rest/v1';
 axios.defaults.baseURL = 'https://ppm-backend.tk/rest/v1';
 
 const apiCall = async (url, method, token, data) => {
   const headersFresh = {
     Accept: 'application/json',
-    "Access-Control-Allow-Origin": "*",
     'Content-Type': 'application/json',
   };
 
   const headers = {
     Authorization: `Bearer ${token}`,
-    "Access-Control-Allow-Origin": "*",
     Accept: 'application/json',
     'Content-Type': 'application/json',
   };

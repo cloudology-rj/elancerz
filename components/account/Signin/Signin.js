@@ -1,11 +1,11 @@
 import Image from 'next/image';
 import Router from 'next/router';
-import axios from 'axios';
+import { useContext } from 'react';
+import { Formik, Form } from 'formik';
 import apiCall from '../../../helpers/fetch';
 
-import { Formik, Form } from 'formik';
-
 import { useAuth } from '../../../context/AuthProvider';
+import {IsMobileContext} from '../../../context/IsMobile'
 
 import {
   HeaderThree,
@@ -16,14 +16,13 @@ import {
 } from '@/components/global/Text';
 import {
   ButtonPrimary,
-  ButtonTertiary,
-  ButtonFacebook,
+
 } from '@/components/global/Button';
 import Input from '@/components/global/Input';
 import Checkbox from '@/components/global/Checkbox';
+import SocialMediaButtons from '../SocialMedia/';
 
-import Facebook from '../../../public/icons/facebook-icon.svg';
-import Google from '../../../public/icons/google-icon.svg';
+
 
 import {
   FlexContainer,
@@ -33,11 +32,14 @@ import {
   ButtonForgotPassword,
 } from './SigninStyles';
 import { BodyLight } from '../AccountStyles';
-import { Flex } from '../../../styles/reusableStyles';
-const SignIn = ({ isModal, onSwitch, onPasswordReset }) => {
-  const { setIsLogin, setToken, isLogin, signInWithGoogle } = useAuth();
 
-  if (isLogin) {
+const SignIn = ({ isModal, onSwitch, onPasswordReset, redirect }) => {
+  const { setIsLogin, setToken, isLogin } = useAuth();
+  const [isMobile] = useContext(IsMobileContext);
+
+
+
+  if (isMobile && isLogin) {
     Router.push('/dashboard');
   }
 
@@ -45,18 +47,7 @@ const SignIn = ({ isModal, onSwitch, onPasswordReset }) => {
     <SigninContainer>
       <HeaderThree>Log in to your account</HeaderThree>
       <br />
-      <ButtonFacebook fullWidth>
-        <Flex direction="row">
-          <Facebook />
-          Continue with Facebook
-        </Flex>
-      </ButtonFacebook>
-      <ButtonTertiary fullWidth isCenter onClick={() => signInWithGoogle()}>
-        <Flex gap="7px" direction="row">
-          <Google />
-          Continue with google
-        </Flex>
-      </ButtonTertiary>
+      <SocialMediaButtons redirect={redirect} />
       <Divider>or</Divider>
 
       <Formik
@@ -79,7 +70,7 @@ const SignIn = ({ isModal, onSwitch, onPasswordReset }) => {
               setIsLogin(true);
 
               setToken(res.access_token);
-              Router.push('/dashboard');
+             redirect &&  redirect();
             })
             .catch((err) => {
               console.log(err.response);

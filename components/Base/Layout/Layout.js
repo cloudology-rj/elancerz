@@ -12,6 +12,7 @@ const Layout = ({ children, title = 'Elancerz' }) => {
     <>
       <Head>
         <title>{title}</title>
+       
       </Head>
       <LayoutContainer>
         <LayoutContent>

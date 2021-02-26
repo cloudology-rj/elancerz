@@ -1,8 +1,5 @@
+import { Info } from 'react-feather';
 import apiCall from '../helpers/fetch';
-
-
-
-
 
 export const fetchFreelancers = (query, page) => {
   return apiCall(`search/services?search=${query}`, 'GET').catch(
@@ -28,7 +25,7 @@ export const fetchProfile = async (token) => {
 export const fetchProfileFreelancer = async (id, token) => {
   const data = await apiCall(`/profile/${id}`, 'GET', token, '');
 
-  console.log('data', data);
+
 
   return data;
 };
@@ -62,12 +59,9 @@ export const updateService = async ({ ...data }) => {
 
 export const deleteService = async ({ ...data }) => {
   // console.log(data);
-  await apiCall(`/services/${data.id}`, 'DELETE', data.token)
+  await apiCall(`/services/${data.id}`, 'DELETE', data.token);
   // return null
 };
-
-
-
 
 // pull /service
 export const getService = async (token, id) => {
@@ -106,4 +100,61 @@ export const fetchEmployerDashboard = async (token) => {
     null
   );
   return data;
+};
+
+
+
+// messages
+
+// GET rooms and messages
+export const getMessages = async (token) => {
+  const messages = await apiCall(`/message`, 'GET', token, null, null);
+  return messages;
+};
+
+
+// CREATE messages
+export const createMessage = async ({ ...data }) => {
+  const messages = await apiCall(`/message`, 'POST', data.token, data.data, null);
+  return messages;
+};
+
+
+// CREATE chat
+export const createChat = async ({ ...data }) => {
+  // console.log('msg:', data);
+  const chat = await apiCall(`/message/chat`, 'POST', data.token, data.cleanMsg, null);
+  return chat;
+};
+
+
+// QUOTE
+
+// CREATE quote
+export const createQuote = async ({ ...quote }) => {
+
+  const data = {
+    "created_by": quote.loginUser,
+    "received_by": quote.selectedProfile,
+    "message": quote.defaultMessage
+  }
+  const token = quote.token
+  const allmsg = await getMessages(quote.token)
+  const checkifExistedRoom = await allmsg.data.filter(x => x.received_by_user.id == quote.selectedProfile)
+
+
+  if (checkifExistedRoom?.length > 0) {
+    // room existed need to chat here
+    const cleanMsg = {
+      "message": quote.defaultMessage,
+      "message_id": checkifExistedRoom.pop().id
+    }
+    await createChat({ token, cleanMsg })
+  } else {
+    // create a room and msg
+    await createMessage({ token, data })
+  }
+
+
+
 };
