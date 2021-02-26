@@ -6,6 +6,29 @@ import {
   ButtonIcon
 } from '@/components/global/Button';
 
+export const HeroImage = styled.div`
+background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)), url("${props => props.bg}");
+height: 480px;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  padding:1.5em;
+
+
+  @media ${(props) => props.theme.mediaQueries.mobile} {
+    margin: 0 1.5em 9em 1.5em;
+  }
+  @media ${(props) => props.theme.mediaQueries.desktop} {
+    margin: 0 1.5em 12em 1.5em;
+  }
+  @media ${(props) => props.theme.mediaQueries.largeScreen} {
+    margin: 0 1.5em 12em 1.5em;
+  }
+`
+
+
 export const ProfileContainer = styled.div`
 display: flex;
 flex-direction: column;

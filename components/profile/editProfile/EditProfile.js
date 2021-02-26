@@ -20,7 +20,8 @@ import {
   ProfileServicesContainer,
   FlexName,
   FlexHalf,
-  DraggingArea
+  DraggingArea,
+  HeroImage
 } from './EditProfileStyles';
 import eFetch from '../../../helpers/fetch';
 
@@ -100,9 +101,11 @@ const EditProfile = ({ user, token }) => {
 
 
 
-  const changeBG = (data) => {
+  const changeBG = async (data) => {
 
-    let mybg = data.target.files[0]
+    let mybg = await data.target.files[0]
+
+    console.log(mybg);
 
     if (mybg) {
       const bgreader = new FileReader()
@@ -171,21 +174,11 @@ const EditProfile = ({ user, token }) => {
   }
 
 
-  const HeroImage = styled.div`
-    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)), url("${_bgimg}");
-    height: 754px;
-    width:100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-    padding:1.5em;
-`
 
 
   return (
     <ProfileContainer>
-      <HeroImage>
+      <HeroImage bg={_bgimg}>
         <ProfileBanner>
           <ButtonPrimary onClick={saveChanges}>
             <FlexBetween>

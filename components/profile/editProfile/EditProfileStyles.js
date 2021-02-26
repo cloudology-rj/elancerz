@@ -35,6 +35,20 @@ export const FormContainer = styled.div`
 
 
 
+export const HeroImage = styled.div`
+background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)),
+  url("${props => props.bg}");
+  height: 754px;
+  width:100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  padding:1.5em;argin: 0 1.5em 12em 1.5em;
+}
+`;
+
+
 export const FlexBetween = styled.div`
 display: flex;
 justify-content:space-between;
