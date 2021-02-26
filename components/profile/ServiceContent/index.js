@@ -39,7 +39,7 @@ const index = ({ service, user, loginUserID, close }) => {
     // console.warn(dataQuote)
     await createQuote(dataQuote)
     await close()
-    router.push(`/messages/${selectedProfile}`)
+    router.push(`/messages/${selectedProfile}?quote`)
   };
 
   return (
