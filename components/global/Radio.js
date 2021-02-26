@@ -1,4 +1,4 @@
-Caimport { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css, keyframes } from 'styled-components';
 
