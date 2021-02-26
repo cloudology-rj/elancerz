@@ -20,8 +20,12 @@ const FreelanceProfile = () => {
   const router = useRouter();
 
   const { token, isLogin } = useAuth();
-
+  
+  
+  if (router.isReady) {
+    
   const { id } = router.query;
+    
   const isIdAvailable = id !== undefined && token !== null;
 
   if (!isLogin) {
@@ -33,8 +37,8 @@ const FreelanceProfile = () => {
     async () => await fetchProfileFreelancer(id, token),
     { enabled: isIdAvailable }
   );
-
-  if (router.isReady) {
+    
+    
     return (
       <Layout>
         <ProfileWithLoading
