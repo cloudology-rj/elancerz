@@ -178,7 +178,8 @@ const FormikStep = (
             onBlur={handleBlur}
             type="password"
             name="password"
-            placeholder="enter your password address"
+            placeholder="enter your password"
+            value={values.password}
             onChange={handleChange}
           />
           {errors.password && touched.password && (
