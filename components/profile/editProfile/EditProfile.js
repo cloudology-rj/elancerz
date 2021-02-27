@@ -169,8 +169,12 @@ const EditProfile = ({ user, token }) => {
 
 
   const cancelClick = async (e) => {
+    if(_Oldbgimg!= null || _Oldbgimg!=undefined || _Oldbgimg!="" || _Oldbgimg!="null"){
     await localStorage.setItem('el-bg', _Oldbgimg)
     router.push('/profile')
+    }else{
+    router.push('/profile')
+    }
   }
 
 
