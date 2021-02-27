@@ -34,8 +34,8 @@ resize: none;
   }
   
 `;
-const TextArea = ({ name, id, reference, placeHolder, defaultValue, props }) => {
-  return <TextAreaStyle placeHolder={placeHolder} defaultValue={defaultValue} {...props} name={name} id={id} ref={reference}></TextAreaStyle>;
+const TextArea = ({ name, id, reference, placeHolder, defaultValue, props,onChange }) => {
+  return <TextAreaStyle onChange={onChange} placeHolder={placeHolder} defaultValue={defaultValue} {...props} name={name} id={id} ref={reference}></TextAreaStyle>;
 };
 
 TextArea.propTypes = {};
