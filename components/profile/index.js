@@ -81,8 +81,6 @@ const Profile = ({ ...props }) => {
             <PreTitle>0 Services Completed</PreTitle>
             <HeaderThree>{service.rate}</HeaderThree>
           </FlexBetween>
-//           <br />
-//           <ButtonPrimary onClick={getaQuote}>GET A QOUTE</ButtonPrimary>
         </>
       );
 
