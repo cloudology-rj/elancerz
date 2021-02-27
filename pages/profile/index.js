@@ -20,13 +20,12 @@ const FreelanceProfile = () => {
   
 //   const [token, setToken] = useLocalStorage('elancerztoken', null);
 
-  const { isLoading, error, data: profileData } = useQuery(
+  const { isLoading, error,isError, data: profileData } = useQuery(
     'profileData',
-    async () => await fetchProfile(token)
+     () => fetchProfile(token)
   );
 
-  if (error)
-    console.log(error)
+  if (isError)
     return (
       <Layout>
         <NotFound>
