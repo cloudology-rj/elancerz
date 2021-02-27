@@ -26,6 +26,7 @@ const FreelanceProfile = () => {
   );
 
   if (error)
+    console.log(error)
     return (
       <Layout>
         <NotFound>
