@@ -96,7 +96,7 @@ const EditProfile = ({ user, token }) => {
 
   // change bg local storage
   const bg = localStorage.getItem('el-bg');
-  const [_bgimg, set_bgimg] = useState(bg == undefined ? '/images/banner.png' : bg)
+  const [_bgimg, set_bgimg] = useState(bg == undefined ||bg == null || bg == "" || bg == "null" ? '/images/banner.png' : bg)
   const [_Oldbgimg, set_Oldbgimg] = useState(bg)
 
 
