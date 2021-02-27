@@ -81,8 +81,8 @@ const Profile = ({ ...props }) => {
             <PreTitle>0 Services Completed</PreTitle>
             <HeaderThree>{service.rate}</HeaderThree>
           </FlexBetween>
-          <br />
-          <ButtonPrimary onClick={getaQuote}>GET A QOUTE</ButtonPrimary>
+//           <br />
+//           <ButtonPrimary onClick={getaQuote}>GET A QOUTE</ButtonPrimary>
         </>
       );
 
@@ -242,8 +242,8 @@ const Profile = ({ ...props }) => {
             serviceFee={'$' + data.price}
             // serviceCompleted={data.num}
             serviceCompleted={0}
-            // toggle={() => toggleModal(data.id)}
-            toggle={() => { }}
+            toggle={() => toggleModal(data.id)}
+//             toggle={() => { }}
           />
         ))}
       </ProfileServices>
