@@ -16,9 +16,9 @@ import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { useState, useEffect } from 'react';
 
 const FreelanceProfile = () => {
-//   const { token, user } = useAuth();
+  const { token, user } = useAuth();
   
-  const [token, setToken] = useLocalStorage('elancerztoken', null);
+//   const [token, setToken] = useLocalStorage('elancerztoken', null);
 
   const { isLoading, error, data: profileData } = useQuery(
     'profileData',
