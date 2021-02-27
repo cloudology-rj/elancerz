@@ -50,6 +50,7 @@ export const AuthProvider = ({ children }) => {
     window.localStorage.clear();
     setIsLogin(false);
     setToken(null)
+    Router.push('/');
   };
 
 
