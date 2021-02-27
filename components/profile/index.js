@@ -95,7 +95,7 @@ const Profile = ({ ...props }) => {
   };
 
   const bg = localStorage.getItem('el-bg');
-  const [_bgimg, set_bgimg] = useState(bg == undefined || bg == null ? '/images/banner.png' : bg)
+  const [_bgimg, set_bgimg] = useState(bg == undefined || bg == null  || bg == ""  || bg == "null" ? '/images/banner.png' : bg)
 
 
 
